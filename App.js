@@ -7,8 +7,9 @@ export default function App() {
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = () => {
-    axios('https://jsonplaceholder.typicode.com/posts')
+    axios('https://api.evos.in.ua/tariffs')
       .then(response => setItems(response.data))
+      .catch((error) => console.error('pomilka'))
       .finally(() => setRefreshing(false));
   };
 
