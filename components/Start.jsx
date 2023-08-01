@@ -2,11 +2,13 @@
 import React from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 
-export const Start = ({ navigation }) => {
+const Start = ({ navigation }) => {
+
   return (
     <View style={styles.container}>
-      <Button title="Register" onPress={() => navigation.navigate('Register')} />
-      <Button title="Login" onPress={() => navigation.navigate('Login')} />
+      <Button title="Home" onPress={() => navigation.navigate('Home')}></Button>
+      <Button title="Register" onPress={() => navigation.navigate('Register')}></Button>
+      <Button title="RegisterPhone" onPress={() => navigation.navigate('RegisterPhone')}></Button>
     </View>
   );
 };
