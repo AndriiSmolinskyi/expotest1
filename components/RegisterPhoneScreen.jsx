@@ -15,7 +15,6 @@ export const RegisterPhoneScreen = ({ navigation }) => {
       });
 
       if (response.status === 200) {
-        setUser({ phone: `380${phone}` });
         navigation.navigate('RegisterData');
       } else {
         console.error('Error sending code:', response.data);

@@ -7,7 +7,6 @@ const Start = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Button title="Home" onPress={() => navigation.navigate('Home')}></Button>
-      <Button title="Register" onPress={() => navigation.navigate('Register')}></Button>
       <Button title="RegisterPhone" onPress={() => navigation.navigate('RegisterPhone')}></Button>
     </View>
   );
