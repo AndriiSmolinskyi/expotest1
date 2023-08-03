@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { UserContext } from './UserContext';
-import { ServerApi } from '../ServerApi';
+import { UserContext } from '../UserContext';
+import { ServerApi } from '../../ServerApi';
 
 export const RegisterPhoneScreen = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
@@ -15,6 +15,7 @@ export const RegisterPhoneScreen = ({ navigation }) => {
       });
 
       if (response.status === 200) {
+        setUser({ phone: `380${phone}` });
         navigation.navigate('RegisterData');
       } else {
         console.error('Error sending code:', response.data);
@@ -38,6 +39,7 @@ export const RegisterPhoneScreen = ({ navigation }) => {
         />
       </View>
       <Button title="Далі" onPress={handleNext} />
+      <Button title="Have account Login" onPress={() => navigation.navigate('Login')} />
     </View>
   );
 };

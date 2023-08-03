@@ -2,8 +2,8 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { UserContext } from './UserContext';
-import { ServerApi } from '../ServerApi';
+import { UserContext } from '../UserContext';
+import { ServerApi } from '../../ServerApi';
 import RegistrationForm from './RegistrationForm';
 
 export const RegisterDataScreen = ({ navigation }) => {
@@ -23,7 +23,7 @@ export const RegisterDataScreen = ({ navigation }) => {
       if (response.status === 201) {
         // Registration successful, redirect to home screen
         console.log('User registered successfully!');
-        setUser({  });
+        // setUser({  });
         navigation.navigate('Home');
       } else {
         setErrorMessage('Неправильний код');
