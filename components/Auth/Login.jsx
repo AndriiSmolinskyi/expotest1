@@ -31,7 +31,7 @@ export const Login = ({ navigation }) => {
         const user = {
           phone: `380${phone}`,
           hashedPassword,
-          token: 'your_token_here', // Замініть на отриманий токен з сервера
+          token: 'App_Token', // Замініть на отриманий токен з сервера
         };
         setUser(user);
   
@@ -63,6 +63,7 @@ export const Login = ({ navigation }) => {
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
+      <Button title="RequestCodeScreen" onPress={() => navigation.navigate('RequestCodeScreen')} />
     </View>
   );
 };

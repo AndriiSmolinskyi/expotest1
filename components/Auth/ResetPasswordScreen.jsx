@@ -1,4 +1,3 @@
-// RegisterDataScreen.js
 import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
@@ -7,13 +6,13 @@ import { ServerApi } from '../../ServerApi';
 import RegistrationForm from './RegistrationForm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const RegisterDataScreen = ({ navigation }) => {
+export const ResetPasswordScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = async (values) => {
     try {
-      const response = await axios.post(`${ServerApi}/account/register`, {
+      const response = await axios.post(`${ServerApi}/account/restore`, {
         phone: user.phone,
         confirm_code: values.code,
         password: values.password,
@@ -24,16 +23,9 @@ export const RegisterDataScreen = ({ navigation }) => {
       if (response.status === 201) {
         // Registration successful, redirect to home screen
         console.log('User registered successfully!');
-        const user = {
-          phone: `380${phone}`,
-          hashedPassword,
-          token: 'App_Token',
-        };
-        setUser(user);
-
+        setUser(null);
         AsyncStorage.setItem('user', JSON.stringify(user));
-        
-        navigation.navigate('Home');
+        navigation.navigate('Login');
       } else {
         setErrorMessage('Неправильний код');
       }
@@ -59,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterDataScreen;
+export default ResetPasswordScreen;
