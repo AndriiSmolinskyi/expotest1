@@ -21,7 +21,7 @@ export const RequestCodeScreen = ({ navigation }) => {
         console.error('Error sending code:', response.data);
       }
     } catch (error) {
-      Alert.alert('Помилка', 'Невірний телефон або акаунт вже існує')
+      Alert.alert('Помилка', 'Невірний телефон')
     }
   };
 
