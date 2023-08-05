@@ -10,7 +10,7 @@ export const ResetPassCode = ({ navigation }) => {
 
   const handleCode = async () => {
     try {
-      const response = await axios.post(`${ServerApi}/account/restore/sendConfirmCode`, {
+      const response = await axios.post(`${ServerApi}/account/restore/checkConfirmCode`, {
         phone: user.phone,
         confirm_code: code,
       });
