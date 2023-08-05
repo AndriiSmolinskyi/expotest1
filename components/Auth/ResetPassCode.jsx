@@ -4,19 +4,20 @@ import axios from 'axios';
 import { UserContext } from '../UserContext';
 import { ServerApi } from '../../ServerApi';
 
-export const RequestCodeScreen = ({ navigation }) => {
-  const { setUser } = useContext(UserContext);
-  const [phone, setPhone] = useState('');
+export const ResetPassCode = ({ navigation }) => {
+  const { user, setUser } = useContext(UserContext);
+  const [code, setCode] = useState('');
 
-  const handleNext = async () => {
+  const handleCode = async () => {
     try {
       const response = await axios.post(`${ServerApi}/account/restore/sendConfirmCode`, {
-        phone: `380${phone}`,
+        phone: user.phone,
+        confirm_code: code,
       });
   
       if (response.status === 200) {
-        setUser({ phone: `380${phone}` });
-        navigation.navigate('ResetPassCode');
+        setUser({ confirm_code: code });
+        navigation.navigate('ResetPasswordScreen');
       } else {
         console.error('Error sending code:', response.data);
       }
@@ -37,18 +38,17 @@ export const RequestCodeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Етап 1: Введіть телефонний номер</Text>
+      <Text>Етап 1: Введіть код з смс</Text>
       <View style={styles.phoneInputContainer}>
-        <Text style={styles.phonePrefix}>+380</Text>
         <TextInput
           style={styles.phoneInput}
-          value={phone}
-          onChangeText={setPhone}
+          value={code}
+          onChangeText={setCode}
           keyboardType="numeric"
           maxLength={9}
         />
       </View>
-      <Button title="Далі" onPress={handleNext} />
+      <Button title="Далі" onPress={handleCode} />
     </View>
   );
 };
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RequestCodeScreen;
+export default ResetPassCode;

@@ -44,6 +44,7 @@ const Start = ({ navigation }) => {
       <Button title="Home" onPress={() => navigation.navigate('Home')} />
       <Button title="RegisterPhone" onPress={() => navigation.navigate('RegisterPhone')} />
       <Button title="Login" onPress={() => navigation.navigate('Login')} />
+      <Button title="ResetPasswordScreen" onPress={() => navigation.navigate('ResetPasswordScreen')} />
     </View>
   );
 };

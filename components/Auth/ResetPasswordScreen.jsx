@@ -4,6 +4,8 @@ import axios from 'axios';
 import { UserContext } from '../UserContext';
 import { ServerApi } from '../../ServerApi';
 import RegistrationForm from './RegistrationForm';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 export const ResetPasswordScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -33,7 +35,7 @@ export const ResetPasswordScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Етап 2: Заповніть дані для реєстрації</Text>
+      <Text>Етап 2: Данні для нового пароля</Text>
       <RegistrationForm handleRegister={handleRegister} errorMessage={errorMessage} />
     </View>
   );
