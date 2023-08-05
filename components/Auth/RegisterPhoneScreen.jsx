@@ -35,7 +35,6 @@ export const RegisterPhoneScreen = ({ navigation }) => {
   //     Alert.alert('Помилка', 'Сталася помилка при відправці запиту');
   //   }
   // };
-
   const handleNext = async () => {
     try {
       const response = await axios.post(`${ServerApi}/account/register/sendConfirmCode`, {

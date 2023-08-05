@@ -32,7 +32,7 @@ export const RegisterDataScreen = ({ navigation }) => {
         setUser(user);
 
         AsyncStorage.setItem('user', JSON.stringify(user));
-        
+        3
         navigation.navigate('Home');
       } else {
         setErrorMessage('Неправильний код');
