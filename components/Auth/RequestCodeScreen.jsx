@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import { UserContext } from '../UserContext';
 import { ServerApi } from '../../ServerApi';
@@ -16,12 +16,12 @@ export const RequestCodeScreen = ({ navigation }) => {
 
       if (response.status === 200) {
         setUser({ phone: `380${phone}` });
-        navigation.navigate('RegisterData');
+        navigation.navigate('ResetPasswordScreen');
       } else {
         console.error('Error sending code:', response.data);
       }
     } catch (error) {
-      console.error('Error sending code:', error);
+      Alert.alert('Помилка', 'Невірний телефон або акаунт вже існує')
     }
   };
 
