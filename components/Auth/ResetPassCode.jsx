@@ -16,7 +16,11 @@ export const ResetPassCode = ({ navigation }) => {
       });
   
       if (response.status === 200) {
-        setUser({ confirm_code: code });
+        const user = {
+          phone: user.phone,
+          confirm_code: code,
+        }
+        setUser({ user });
         navigation.navigate('ResetPasswordScreen');
       } else {
         console.error('Error sending code:', response.data);
