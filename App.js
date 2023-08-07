@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar, Text } from 'react-native';
 import { UserProvider } from './components/UserContext';
 import Start from './components/Start';
-import Home from './components/Home';
+import Home from './components/Home/Home';
 import RegisterPhoneScreen from './components/Auth/RegisterPhoneScreen';
 import RegisterDataScreen from './components/Auth/RegisterDataScreen';
 import Login from './components/Auth/Login';
