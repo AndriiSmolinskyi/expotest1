@@ -1,8 +1,8 @@
 import React from 'react';
-import MapView, { Marker, Polyline } from 'react-native-maps';
 import { StyleSheet } from 'react-native';
+import MapView, { Polyline } from 'react-native-maps';
 
-export const MapViewComponent = ({ origin, destination }) => {
+export const MapViewComponent = ({ routeCoordinates }) => {
   const initialRegion = {
     latitude: 50.4501,
     longitude: 30.5234,
@@ -10,17 +10,10 @@ export const MapViewComponent = ({ origin, destination }) => {
     longitudeDelta: 0.0421,
   };
 
-  const polylineCoordinates = [
-    { latitude: 50.4501, longitude: 30.5234 },
-    { latitude: 50.4502, longitude: 30.5235 },
-    // Add more coordinates as needed
-  ];
-
   return (
     <MapView style={styles.map} initialRegion={initialRegion}>
-      <Marker coordinate={{ latitude: 50.4501, longitude: 30.5234 }} />
       <Polyline
-        coordinates={polylineCoordinates}
+        coordinates={routeCoordinates}
         strokeColor="#000"
         strokeWidth={2}
       />
