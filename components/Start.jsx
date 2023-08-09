@@ -5,6 +5,7 @@ import { ServerApi } from '../ServerApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './UserContext';
 
+
 const Start = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
 
