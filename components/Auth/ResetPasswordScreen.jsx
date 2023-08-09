@@ -29,13 +29,13 @@ export const ResetPasswordScreen = ({ navigation }) => {
         confirm_password: values.confirmPassword,
       });
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         // Password reset successful, redirect to login screen
         console.log('Password reset successful!');
         setUser(null);
         navigation.navigate('Login');
       } else {
-        console.error('Error resetting password:', response.data);
+        console.error('Error resetting password:', response.data ? 'yes' : 'no');
       }
     } catch (error) {
       console.log(user)
