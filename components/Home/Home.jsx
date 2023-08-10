@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { UserContext } from '../UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import VisicomMap from './VisicomMap';
 
 
 export const Home = ({ navigation }) => {
@@ -22,6 +23,7 @@ export const Home = ({ navigation }) => {
       <Text>Welcome to Home Page!</Text>
       <Text>Phone: {user ? user.phone : ''}</Text>
       <Button title="Logout" onPress={handleLogout} />
+      <VisicomMap/>
     </View>
   );
 };
