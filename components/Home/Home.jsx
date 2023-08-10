@@ -21,6 +21,7 @@ export const Home = ({ navigation }) => {
       <Text>Welcome to Home Page!</Text>
       <Text>Phone: {user ? user.phone : ''}</Text>
       <Button title="Logout" onPress={handleLogout} />
+      <Button title="MyMapComponent" onPress={() => navigation.navigate('MyMapComponent')} />
     </View>
   );
 };
@@ -28,7 +29,6 @@ export const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
 });

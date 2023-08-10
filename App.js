@@ -11,6 +11,7 @@ import Login from './components/Auth/Login';
 import RequestCodeScreen from './components/Auth/RequestCodeScreen';
 import ResetPasswordScreen from './components/Auth/ResetPasswordScreen';
 import ResetPassCode from './components/Auth/ResetPassCode';
+import MyMapComponent from './components/Home/MyMapComponent';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,7 @@ const App = () => {
           <Stack.Screen name="RequestCodeScreen" component={RequestCodeScreen} />
           <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
           <Stack.Screen name="ResetPassCode" component={ResetPassCode} />
+          <Stack.Screen name="MyMapComponent" component={MyMapComponent} />
         </Stack.Navigator>
       </UserProvider>
     </NavigationContainer>
