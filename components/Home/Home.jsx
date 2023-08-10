@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { UserContext } from '../UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
 
@@ -30,6 +31,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  map: {
+    height: '60%',
+    width: '80%',
   },
 });
 
