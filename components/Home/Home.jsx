@@ -22,6 +22,7 @@ export const Home = ({ navigation }) => {
       <Text>Phone: {user ? user.phone : ''}</Text>
       <Button title="Logout" onPress={handleLogout} />
       <Button title="MyMapComponent" onPress={() => navigation.navigate('MyMapComponent')} />
+      <Button title="LiveSearchComponent" onPress={() => navigation.navigate('LiveSearchComponent')} />
     </View>
   );
 };
