@@ -13,6 +13,7 @@ import ResetPasswordScreen from './components/Auth/ResetPasswordScreen';
 import ResetPassCode from './components/Auth/ResetPassCode';
 import MyMapComponent from './components/Home/MyMapComponent';
 import LiveSearchComponent from './components/Home/LiveSearchComponent';
+import VisicomSearchWithSuggestions from './components/Home/VisicomSearchWithSuggestions';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ const App = () => {
           <Stack.Screen name="ResetPassCode" component={ResetPassCode} />
           <Stack.Screen name="MyMapComponent" component={MyMapComponent} />
           <Stack.Screen name="LiveSearchComponent" component={LiveSearchComponent} />
+          <Stack.Screen name="VisicomSearchWithSuggestions" component={VisicomSearchWithSuggestions} />
         </Stack.Navigator>
       </UserProvider>
     </NavigationContainer>

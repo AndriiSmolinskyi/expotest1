@@ -23,6 +23,7 @@ export const Home = ({ navigation }) => {
       <Button title="Logout" onPress={handleLogout} />
       <Button title="MyMapComponent" onPress={() => navigation.navigate('MyMapComponent')} />
       <Button title="LiveSearchComponent" onPress={() => navigation.navigate('LiveSearchComponent')} />
+      <Button title="VisicomSearchWithSuggestions" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
     </View>
   );
 };
