@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { UserContext } from '../UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LiveSearchComponent from './LiveSearchComponent';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -21,9 +22,9 @@ export const Home = ({ navigation }) => {
       <Text>Welcome to Home Page!</Text>
       <Text>Phone: {user ? user.phone : ''}</Text>
       <Button title="Logout" onPress={handleLogout} />
-      <Button title="MyMapComponent" onPress={() => navigation.navigate('MyMapComponent')} />
       <Button title="LiveSearchComponent" onPress={() => navigation.navigate('LiveSearchComponent')} />
       <Button title="VisicomSearchWithSuggestions" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
+      <LiveSearchComponent></LiveSearchComponent>
     </View>
   );
 };

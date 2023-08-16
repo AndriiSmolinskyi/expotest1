@@ -12,7 +12,9 @@ export const RegisterDataScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = async (values) => {
+   
     try {
+      
       const response = await axios.post(`${ServerApi}/account/register`, {
         phone: user.phone,
         confirm_code: values.code,
@@ -20,20 +22,20 @@ export const RegisterDataScreen = ({ navigation }) => {
         confirm_password: values.confirmPassword,
         user_first_name: values.name,
       });
+      
     
-      if (response.status === 201) {
+      if (response.status === 201 && response.status === 200) {
         // Registration successful, redirect to home screen
         console.log('User registered successfully!');
         const user = {
-          phone: `380${phone}`,
+          phone: `3800${values.phone}`,
           hashedPassword,
           token: 'App_Token',
         };
-        setUser(user);
-
+        
         AsyncStorage.setItem('user', JSON.stringify(user));
-        3
-        navigation.navigate('Home');
+        
+        navigation.navigate('Start');
       } else {
         setErrorMessage('Неправильний код');
       }
@@ -41,8 +43,9 @@ export const RegisterDataScreen = ({ navigation }) => {
       console.error('Error registering user:', error);
       setErrorMessage('Помилка реєстрації');
     }
+    
   };
-
+ 
   return (
     <View style={styles.container}>
       <Text>Етап 2: Заповніть дані для реєстрації</Text>

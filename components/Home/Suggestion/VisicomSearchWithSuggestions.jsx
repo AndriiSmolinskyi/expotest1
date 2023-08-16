@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity} from 'react-native';
+import { View } from 'react-native';
 import axios from 'axios';
+import { SearchWithSuggestions } from './SearchWithSuggestions';
 
 export const VisicomSearchWithSuggestions = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [suggestion, setSuggestion] = useState(null); // Змінено state на об'єкт
+  const [fromSuggestion, setFromSuggestion] = useState({ query: '', data: null });
+  const [toSuggestion, setToSuggestion] = useState({ query: '', data: null });
   const [timer, setTimer] = useState(null);
 
-  const handleSearchChange = async (text) => {
-    setSearchQuery(text);
+  const handleSearchChange = async (text, setSuggestion) => {
+    setSuggestion((prevSuggestion) => ({ ...prevSuggestion, query: text }));
 
     if (timer) {
       clearTimeout(timer);
@@ -28,59 +29,42 @@ export const VisicomSearchWithSuggestions = () => {
           },
         });
 
-        // Отримання підказки з API та оновлення стану
-        const suggestionData = response.data; // Один об'єкт
-        setSuggestion(suggestionData);
-        console.log(suggestionData);
+        const suggestionData = response.data;
+        setSuggestion((prevSuggestion) => ({ ...prevSuggestion, data: suggestionData }));
+        console.log('Suggestion Data:', suggestionData);
       } catch (error) {
         console.error('Error fetching suggestions:', error);
-        setSuggestion(null);
+        setSuggestion((prevSuggestion) => ({ ...prevSuggestion, data: null }));
       }
-    }, 1500); 
+    }, 1500);
 
-    // Збереження таймера
     setTimer(newTimer);
   };
 
-  const handleChange = () => {
+  const handleSuggestionChange = (suggestion, setSuggestion) => {
     let inputText;
-    if(suggestion.properties.address){
+    if (suggestion.properties.address) {
       inputText = suggestion.properties.address;
     } else {
       inputText = suggestion.properties.name;
-    }   
-    setSuggestion(null);
-    setSearchQuery(inputText);
-  } 
+    }
+    setSuggestion({ query: inputText, data: null });
+  };
 
   return (
     <View>
-      <TextInput
+      <SearchWithSuggestions
         placeholder="Звідки їдемо?"
-        value={searchQuery}
-        onChangeText={handleSearchChange}
+        suggestion={fromSuggestion}
+        onSearchChange={(text) => handleSearchChange(text, setFromSuggestion)}
+        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setFromSuggestion)}
       />
-      {suggestion && (
-      <TouchableOpacity onPress={handleChange}>
-        <View>
-          <Text>Назва: {suggestion.properties.name}</Text>
-          <Text>Адреса: {suggestion.properties.address}</Text>
-        </View>
-      </TouchableOpacity>
-      )}
-      <TextInput
+      <SearchWithSuggestions
         placeholder="Куди їдемо?"
-        value={searchQuery}
-        onChangeText={handleSearchChange}
+        suggestion={toSuggestion}
+        onSearchChange={(text) => handleSearchChange(text, setToSuggestion)}
+        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setToSuggestion)}
       />
-      {suggestion && (
-      <TouchableOpacity onPress={handleChange}>
-        <View>
-          <Text>Назва: {suggestion.properties.name}</Text>
-          <Text>Адреса: {suggestion.properties.address}</Text>
-        </View>
-      </TouchableOpacity>
-      )}
     </View>
   );
 };
