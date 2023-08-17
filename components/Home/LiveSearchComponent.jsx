@@ -1,64 +1,141 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
+// import React, { useState, useEffect, useContext } from 'react';
+// import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
+// import MapView, { Marker, Polyline } from 'react-native-maps';
+// import axios from 'axios';
+// import { GeoContext } from '../GeoContext';
+
+// export const LiveSearchComponent = () => {
+//     const [route, setRoute] = useState([]);
+//     const { startCoords, endCoords} = useContext(GeoContext);
+//     useEffect(() => {
+//       handleSearch();
+//     }, [startCoords, endCoords]);
+//     const handleSearch = async () => {
+//       const origin = startCoords;
+//       const destination = endCoords
+//       const apiKey = '20a396a7d85377ccd96d9491b7889643';
+//       try {
+//         const response = await axios.get(`https://api.visicom.ua/data-api/5.0/core/distance.json?origin=${origin}&destination=${destination}&geometry=path&key=${apiKey}`);
+//         const data = response.data;
+  
+//         if (data.geometry && data.geometry.coordinates) {
+//           setRoute(data.geometry.coordinates);
+//         } else {
+//           setRoute([]);
+//         }
+//       } catch (error) {
+//         console.error('Error fetching route:', error);
+//         setRoute([]);
+//       }
+//     };
+  
+//     return (
+//       <View style={styles.container}>
+//         <MapView
+//           style={styles.map}
+//           initialRegion={{
+//             latitude: 50.455002,
+//             longitude: 30.511284,
+//             latitudeDelta: 0.1,
+//             longitudeDelta: 0.1,
+//           }}
+//         >
+//           {route.length > 0 && (
+//             <Polyline coordinates={route.map(coord => ({ latitude: coord[1], longitude: coord[0] }))} strokeWidth={4} />
+//           )}
+//         </MapView>
+//       </View>
+//     );
+//   };
+  
+//   const styles = StyleSheet.create({
+//     container:{
+//       flex: 1,
+//       width: '100%'
+      
+//     },
+//     map: {
+//       flex: 1,
+//       marginTop: 20,
+//     },
+//   });
+  
+
+// export default LiveSearchComponent;
+
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { View, StyleSheet } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
 import { GeoContext } from '../GeoContext';
 
 export const LiveSearchComponent = () => {
-    const [route, setRoute] = useState([]);
-    const { startCoords, endCoords} = useContext(GeoContext);
-    useEffect(() => {
-      handleSearch();
-    }, [startCoords, endCoords]);
-    const handleSearch = async () => {
-      const origin = startCoords;
-      const destination = endCoords
-      const apiKey = '20a396a7d85377ccd96d9491b7889643';
-      try {
-        const response = await axios.get(`https://api.visicom.ua/data-api/5.0/core/distance.json?origin=${origin}&destination=${destination}&geometry=path&key=${apiKey}`);
-        const data = response.data;
-  
-        if (data.geometry && data.geometry.coordinates) {
-          setRoute(data.geometry.coordinates);
-        } else {
-          setRoute([]);
+  const [route, setRoute] = useState([]);
+  const { startCoords, endCoords } = useContext(GeoContext);
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    handleSearch();
+  }, [startCoords, endCoords]);
+
+  const handleSearch = async () => {
+    const origin = startCoords;
+    const destination = endCoords;
+    const apiKey = '20a396a7d85377ccd96d9491b7889643';
+    try {
+      const response = await axios.get(`https://api.visicom.ua/data-api/5.0/core/distance.json?origin=${origin}&destination=${destination}&geometry=path&key=${apiKey}`);
+      const data = response.data;
+
+      if (data.geometry && data.geometry.coordinates) {
+        setRoute(data.geometry.coordinates);
+        if (mapRef.current) {
+          const routeBounds = data.geometry.coordinates.map(coord => ({
+            latitude: coord[1],
+            longitude: coord[0],
+          }));
+
+          mapRef.current.fitToCoordinates(routeBounds, {
+            edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+          });
         }
-      } catch (error) {
-        console.error('Error fetching route:', error);
+      } else {
         setRoute([]);
       }
-    };
-  
-    return (
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: 50.455002,
-            longitude: 30.511284,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
-          }}
-        >
-          {route.length > 0 && (
-            <Polyline coordinates={route.map(coord => ({ latitude: coord[1], longitude: coord[0] }))} strokeWidth={4} />
-          )}
-        </MapView>
-      </View>
-    );
+    } catch (error) {
+      console.error('Error fetching route:', error);
+      setRoute([]);
+    }
   };
-  
-  const styles = StyleSheet.create({
-    container:{
-      flex: 1,
-      width: '100%'
-      
-    },
-    map: {
-      flex: 1,
-      marginTop: 20,
-    },
-  });
-  
+
+  return (
+    <View style={styles.container}>
+      <MapView
+        ref={mapRef}
+        style={styles.map}
+        initialRegion={{
+          latitude: 50.455002,
+          longitude: 30.511284,
+          latitudeDelta: 1.2,  // Змініть це значення для більшого зуму
+          longitudeDelta: 1.2, // Змініть це значення для більшого зуму
+        }}
+      >
+        {route.length > 0 && (
+          <Polyline coordinates={route.map(coord => ({ latitude: coord[1], longitude: coord[0] }))} strokeWidth={4} />
+        )}
+      </MapView>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+  },
+  map: {
+    flex: 1,
+    marginTop: 20,
+  },
+});
 
 export default LiveSearchComponent;

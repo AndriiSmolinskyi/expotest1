@@ -30,13 +30,19 @@ const Start = ({ navigation }) => {
 
         if (response.status === 200) {
           setUser(user); // Записати дані в UserContext
-          navigation.navigate('Home');
-        } else {
-          console.error('Authentication failed:', response.data);
-        }
+          // navigation.navigate('Home');
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }], // Переходимо на Home і очищаємо стек навігації
+          });
+        } 
+        // else {
+        //   console.error('Authentication failed:', response.data);
+        // }
       }
-    } catch (error) {
-      console.error('Error checking user authentication:', error);
+    } 
+    catch (error) {
+      // console.error('Error checking user authentication:', error);
     }
   };
 
