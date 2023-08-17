@@ -8,7 +8,7 @@ export const VisicomSearchWithSuggestions = () => {
   const [fromSuggestion, setFromSuggestion] = useState({ query: '', data: null });
   const [toSuggestion, setToSuggestion] = useState({ query: '', data: null });
   const [timer, setTimer] = useState(null);
-  const { startCoords, setStartCoords, endCoords, setEndCoords } = useContext(GeoContext);
+  const { setStartCoords, setEndCoords } = useContext(GeoContext);
 
   const handleSearchChange = async (text, setSuggestion) => {
     setSuggestion((prevSuggestion) => ({ ...prevSuggestion, query: text }));
