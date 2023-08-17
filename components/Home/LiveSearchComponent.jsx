@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
+import { GeoContext } from '../GeoContext';
 
 export const LiveSearchComponent = () => {
-    const [origin, setOrigin] = useState('');
-    const [destination, setDestination] = useState('');
     const [route, setRoute] = useState([]);
-  
+    const { startCoords, endCoords} = useContext(GeoContext);
+    useEffect(() => {
+      handleSearch();
+    }, []);
     const handleSearch = async () => {
-      navigation.navigate('VisicomSearchWithSuggestions')
+      const origin = startCoords;
+      const destination = endCoords
       const apiKey = '20a396a7d85377ccd96d9491b7889643';
       try {
         const response = await axios.get(`https://api.visicom.ua/data-api/5.0/core/distance.json?origin=${origin}&destination=${destination}&geometry=path&key=${apiKey}`);
@@ -28,7 +31,6 @@ export const LiveSearchComponent = () => {
   
     return (
       <View style={styles.container}>
-        <Button title="Побудувати маршрут" onPress={handleSearch} />
         <MapView
           style={styles.map}
           initialRegion={{

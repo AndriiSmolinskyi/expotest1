@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
 import axios from 'axios';
 import { SearchWithSuggestions } from './SearchWithSuggestions';
+import { GeoContext } from '../../GeoContext';
 
 export const VisicomSearchWithSuggestions = () => {
   const [fromSuggestion, setFromSuggestion] = useState({ query: '', data: null });
   const [toSuggestion, setToSuggestion] = useState({ query: '', data: null });
   const [timer, setTimer] = useState(null);
+  const { startCoords, setStartCoords, endCoords, setEndCoords } = useContext(GeoContext);
 
   const handleSearchChange = async (text, setSuggestion) => {
     setSuggestion((prevSuggestion) => ({ ...prevSuggestion, query: text }));
@@ -29,7 +31,7 @@ export const VisicomSearchWithSuggestions = () => {
           },
         });
 
-        const suggestionData = response.data;
+        const suggestionData = response.data; 
         setSuggestion((prevSuggestion) => ({ ...prevSuggestion, data: suggestionData }));
         console.log('Suggestion Data:', suggestionData);
       } catch (error) {
@@ -41,7 +43,8 @@ export const VisicomSearchWithSuggestions = () => {
     setTimer(newTimer);
   };
 
-  const handleSuggestionChange = (suggestion, setSuggestion) => {
+  const handleSuggestionChange = (suggestion, setSuggestion, setCords) => {
+    setCords(suggestion.geo_centroid.coordinates)
     let inputText;
     if (suggestion.properties.address) {
       inputText = suggestion.properties.address;
@@ -57,13 +60,13 @@ export const VisicomSearchWithSuggestions = () => {
         placeholder="Звідки їдемо?"
         suggestion={fromSuggestion}
         onSearchChange={(text) => handleSearchChange(text, setFromSuggestion)}
-        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setFromSuggestion)}
+        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setFromSuggestion, setStartCoords)}
       />
       <SearchWithSuggestions
         placeholder="Куди їдемо?"
         suggestion={toSuggestion}
         onSearchChange={(text) => handleSearchChange(text, setToSuggestion)}
-        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setToSuggestion)}
+        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setToSuggestion, setEndCoords)}
       />
     </View>
   );

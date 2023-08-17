@@ -6,6 +6,7 @@ import { UserContext } from '../UserContext';
 import { ServerApi } from '../../ServerApi';
 import RegistrationForm from './RegistrationForm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SHA512 from 'crypto-js/sha512';
 
 export const RegisterDataScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -24,16 +25,17 @@ export const RegisterDataScreen = ({ navigation }) => {
       });
       
     
-      if (response.status === 201 && response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         // Registration successful, redirect to home screen
         console.log('User registered successfully!');
-        const user = {
+        const hashedPassword = SHA512(values.password).toString();
+        const newUser = {
           phone: `3800${values.phone}`,
           hashedPassword,
           token: 'App_Token',
         };
-        
-        AsyncStorage.setItem('user', JSON.stringify(user));
+        setUser(newUser)
+        AsyncStorage.setItem('user', JSON.stringify(newUser));
         
         navigation.navigate('Start');
       } else {

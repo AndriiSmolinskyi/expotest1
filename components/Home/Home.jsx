@@ -22,7 +22,6 @@ export const Home = ({ navigation }) => {
       <Text>Welcome to Home Page!</Text>
       <Text>Phone: {user ? user.phone : ''}</Text>
       <Button title="Logout" onPress={handleLogout} />
-      <Button title="LiveSearchComponent" onPress={() => navigation.navigate('LiveSearchComponent')} />
       <Button title="VisicomSearchWithSuggestions" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
       <LiveSearchComponent></LiveSearchComponent>
     </View>

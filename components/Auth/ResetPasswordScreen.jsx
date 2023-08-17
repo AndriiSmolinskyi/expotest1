@@ -30,7 +30,6 @@ export const ResetPasswordScreen = ({ navigation }) => {
       });
 
       if (response.status === 200) {
-        // Password reset successful, redirect to login screen
         console.log('Password reset successful!');
         setUser(null);
         navigation.navigate('Login');
@@ -41,10 +40,8 @@ export const ResetPasswordScreen = ({ navigation }) => {
       console.log(user)
       console.error('An error occurred:', error);
       if (error.response) {
-        // Handle error responses from the server
-        Alert.alert('Помилка', error.response.data.message); // or use a different key for error message
+        Alert.alert('Помилка', error.response.data.message); 
       } else {
-        // Handle other types of errors
         console.error('An error occurred while resetting password:', error.message);
       }
     }

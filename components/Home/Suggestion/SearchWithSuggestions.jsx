@@ -18,4 +18,4 @@ export const SearchWithSuggestions = ({ placeholder, suggestion, onSearchChange,
         )}
       </View>
     );
-  };
+};
