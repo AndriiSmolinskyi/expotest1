@@ -9,7 +9,7 @@ export const LiveSearchComponent = () => {
     const { startCoords, endCoords} = useContext(GeoContext);
     useEffect(() => {
       handleSearch();
-    }, []);
+    }, [startCoords, endCoords]);
     const handleSearch = async () => {
       const origin = startCoords;
       const destination = endCoords
