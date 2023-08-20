@@ -1,59 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { ServerApi } from '../../ServerApi';
+import { UserContext } from '../UserContext'; // Підключіть ваш контекст користувача
+import { encode } from 'base-64';
 
 const CalculateCostButton = () => {
   const [responseText, setResponseText] = useState('');
+  const [versionResponse, setVersionResponse] = useState('');
+  const { user } = useContext(UserContext); // Отримайте дані користувача з контексту
 
   const handleCalculateCost = async () => {
     const requestData = {
-        user_full_name:"",
-        user_phone:"380989058658",
-        client_sub_card:null,
-        required_time:null,
-        reservation:false,
-        route_address_entrance_from:null,
-        comment:"",
-        add_cost:12.0,
-        wagon:true,
-        minibus:false,
-        premium:false,
-        flexible_tariff_name: "",
-        baggage:false,
-        animal:false,
-        conditioner:true,
-        courier_delivery:false,
-        route_undefined:false,      
-        terminal:false,  
-        receipt:false,    
-        route:
-        [
-            {"name":"вход м.Шевченко.","lat":50.474613, "lng":30.506389},
-            {"name":"м.Иподром.","lat":50.377615, "lng":30.468195}
-        ],
-        taxiColumnId:0
+      reservation: true,
+      wagon: true,
+      baggage: true,
+      taxiColumnId: 0,
+      route: [
+        {"name": "вход м.Шевченко.","lat": 50.474613, "lng": 30.506389},
+        {"name": "м.Иподром.","lat": 50.377615, "lng": 30.468195}
+      ],
+      taxiColumnId: 0
     };
 
-    const apiUrl = `${ServerApi}weborders/cost`;
+    const credentials = `${user.phone}:${user.hashedPassword}`; // Використайте дані з контексту
+    console.log(credentials)
+    const base64Credentials = encode(credentials);
+    console.log(base64Credentials)
 
     try {
-      const response = await axios.post(apiUrl, requestData)
+      const response = await axios.post(`${ServerApi}weborders/cost`, requestData, {
+        headers: {
+          Authorization: `Basic ${base64Credentials}`,
+          'X-WO-API-APP-ID': user.token, // Замініть на ваш app ID
+          'X-API-VERSION': `1.52.1 `// Замініть на версію API
+        }
+      });
 
       const responseData = response.data;
 
-      // Обробка результату відповіді сервера
-      setResponseText(JSON.stringify(responseData, null, 2));
+      setResponseText(responseData);
     } catch (error) {
       console.error('Error calculating cost:', error);
       setResponseText('Error calculating cost');
     }
   };
 
+  const handleGetVersion = async () => {
+    try {
+      const response = await axios.get(`${ServerApi}version`, {
+        headers: {
+          Accept: 'application/json',
+        }
+      });
+
+      const versionData = response.data;
+      console.log(versionData)
+      setVersionResponse(versionData.version);
+      
+    } catch (error) {
+      console.error('Error getting version:', error);
+      setVersionResponse('Error getting version');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Button title="Calculate Cost" onPress={handleCalculateCost} />
+      <Button title="Get Version" onPress={handleGetVersion} />
       <Text style={styles.responseText}>{responseText}</Text>
+      <Text style={styles.versionResponse}>API Version: {versionResponse}</Text>
     </View>
   );
 };
@@ -66,6 +82,11 @@ const styles = StyleSheet.create({
   responseText: {
     marginTop: 10,
     fontFamily: 'monospace',
+  },
+  versionResponse: {
+    marginTop: 10,
+    fontFamily: 'monospace',
+    color: 'blue',
   },
 });
 
