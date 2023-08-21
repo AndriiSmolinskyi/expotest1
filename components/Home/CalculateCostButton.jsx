@@ -11,11 +11,17 @@ const CalculateCostButton = () => {
   const { user } = useContext(UserContext); // Отримайте дані користувача з контексту
 
   const handleCalculateCost = async () => {
+    const credentials = `${user.phone}:${user.hashedPassword}`;
+    const base64Credentials = encode(credentials);
+    console.log(credentials);
+    console.log(base64Credentials);
+
     const requestData = {
-      reservation: true,
+      reservation: false,
       wagon: true,
       baggage: true,
       taxiColumnId: 0,
+      Authorization: `Basic ${base64Credentials}`,
       route: [
         {"name": "вход м.Шевченко.","lat": 50.474613, "lng": 30.506389},
         {"name": "м.Иподром.","lat": 50.377615, "lng": 30.468195}
@@ -23,19 +29,15 @@ const CalculateCostButton = () => {
       taxiColumnId: 0
     };
 
-    const credentials = `${user.phone}:${user.hashedPassword}`; // Використайте дані з контексту
-    console.log(credentials)
-    const base64Credentials = encode(credentials);
-    console.log(base64Credentials)
 
     try {
-      const response = await axios.post(`${ServerApi}weborders/cost`, requestData, {
+      const response = await axios.post(`${ServerApi}weborders/cost`, requestData      , {
         headers: {
           Authorization: `Basic ${base64Credentials}`,
-          'X-WO-API-APP-ID': user.token, // Замініть на ваш app ID
-          'X-API-VERSION': `1.52.1 `// Замініть на версію API
+          'X-API-VERSION': `1.52.1 `
         }
       });
+
 
       const responseData = response.data;
 

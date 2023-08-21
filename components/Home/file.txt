@@ -1,0 +1,23 @@
+Запит 1 (Рассчет стоимости заказа):
+HTTP-метод: POST
+URL: http://http://31.43.107.151:7321/api/api/weborders/cost
+Логін і хеш_пароль без Base64 3800989058658:775797556b3b8f1b89763cf9daf10492d4960b5ea9d902c05e7cde1c92ce29c15c9926ec9c7336885edaf400cae3711f0abbc89345dc6a047bcb4a176014c45f
+Заголовки:
+Authorization: `Basic MzgwMDk4OTA1ODY1ODo3NzU3OTc1NTZiM2I4ZjFiODk3NjNjZjlkYWYxMDQ5MmQ0OTYwYjVlYTlkOTAyYzA1ZTdjZGUxYzkyY2UyOWMxNWM5OTI2ZWM5YzczMzY4ODVlZGFmNDAwY2FlMzcxMWYwYWJiYzg5MzQ1ZGM2YTA0N2JjYjRhMTc2MDE0YzQ1Zg==`
+`X-API-VERSION`: `1.52.1 `
+Дані запиту: 
+{
+  "reservation": true,
+  "wagon": true,
+  "baggage": true,
+  "taxiColumnId": 0,
+  "route": [
+    {"name": "вход м.Шевченко.","lat": 50.474613, "lng": 30.506389},
+    {"name": "м.Иподром.","lat": 50.377615, "lng": 30.468195}
+  ],
+  "taxiColumnId": 0
+}
+
+Відповідь 1:
+Статус: 401 Unauthorized
+Повідомлення: Помилка автентифікації

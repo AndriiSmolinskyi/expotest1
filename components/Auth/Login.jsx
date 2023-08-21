@@ -37,7 +37,7 @@ export const Login = ({ navigation }) => {
         const user = {
           phone: `3800${values.phone}`,
           hashedPassword,
-          token: 'App_Token', // Замініть на отриманий токен з сервера
+          WebOrdersApiClientAppToken: 'App_Token', // Замініть на отриманий токен з сервера
         };
         setUser(user);
 
