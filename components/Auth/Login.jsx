@@ -35,7 +35,7 @@ export const Login = ({ navigation }) => {
 
       if (response.status === 200) {
         const user = {
-          phone: `3800${values.phone}`,
+          phone: `380${values.phone}`,
           hashedPassword,
           WebOrdersApiClientAppToken: 'App_Token', // Замініть на отриманий токен з сервера
         };

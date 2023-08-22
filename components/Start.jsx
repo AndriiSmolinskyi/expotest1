@@ -21,7 +21,7 @@ const Start = ({ navigation }) => {
         console.log('User data from AsyncStorage:', user);
 
         const requestData = {
-          login: user.phone.replace('380', ''),
+          login: user.phone,
           password: user.hashedPassword, // Вже захешований пароль
           WebOrdersApiClientAppToken: 'App_Token',
         };
