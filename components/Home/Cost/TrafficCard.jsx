@@ -24,9 +24,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    padding: 10,
-    margin: 2,
     width: '23%',
+    flex: 1,
+    justifyContent: 'center', 
+    alignItems: 'center', 
   },
   tariffName: {
     fontWeight: 'bold',

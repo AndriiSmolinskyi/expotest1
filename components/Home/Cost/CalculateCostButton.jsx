@@ -137,7 +137,9 @@ export const CalculateCostButton = () => {
   };
 
   useEffect(() => {
-    handleCalculateCost();
+    if (startLocation && endLocation) {
+      handleCalculateCost();
+    }
   }, [startLocation, endLocation]);
 
   return (
