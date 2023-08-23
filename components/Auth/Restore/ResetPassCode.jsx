@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
-import { UserContext } from '../UserContext';
-import { ServerApi } from '../../ServerApi';
+import { UserContext } from '../../Context/UserContext';
+import { ServerApi } from '../../../ServerApi';
 
 export const ResetPassCode = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);

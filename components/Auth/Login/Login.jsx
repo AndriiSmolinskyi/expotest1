@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
-import { UserContext } from '../UserContext';
-import { ServerApi } from '../../ServerApi';
+import { UserContext } from '../../Context/UserContext';
+import { ServerApi } from '../../../ServerApi';
 import SHA512 from 'crypto-js/sha512';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';

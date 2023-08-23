@@ -67,7 +67,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
-import { GeoContext } from '../GeoContext';
+import { GeoContext } from '../../Context/GeoContext';
 
 export const LiveSearchComponent = () => {
   const [route, setRoute] = useState([]);

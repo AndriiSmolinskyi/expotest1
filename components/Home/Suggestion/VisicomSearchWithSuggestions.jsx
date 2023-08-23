@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
 import axios from 'axios';
 import { SearchWithSuggestions } from './SearchWithSuggestions';
-import { GeoContext } from '../../GeoContext';
+import { GeoContext } from '../../Context/GeoContext';
 
 export const VisicomSearchWithSuggestions = () => {
   const [fromSuggestion, setFromSuggestion] = useState({ query: '', data: null });

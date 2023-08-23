@@ -3,7 +3,7 @@ import { View, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { ServerApi } from '../ServerApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserContext } from './UserContext';
+import { UserContext } from './Context/UserContext';
 
 
 const Start = ({ navigation }) => {
@@ -36,13 +36,13 @@ const Start = ({ navigation }) => {
             routes: [{ name: 'Home' }], // Переходимо на Home і очищаємо стек навігації
           });
         } 
-        // else {
-        //   console.error('Authentication failed:', response.data);
-        // }
+        else {
+          console.error('Authentication failed:', response.data);
+        }
       }
     } 
     catch (error) {
-      // console.error('Error checking user authentication:', error);
+      console.error('Error checking user authentication:', error);
     }
   };
 

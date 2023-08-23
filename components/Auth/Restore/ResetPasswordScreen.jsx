@@ -2,8 +2,8 @@
 import React, { useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
-import { UserContext } from '../UserContext';
-import { ServerApi } from '../../ServerApi';
+import { UserContext } from '../../Context/UserContext';
+import { ServerApi } from '../../../ServerApi';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 

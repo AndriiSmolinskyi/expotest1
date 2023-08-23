@@ -2,18 +2,18 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar, Text } from 'react-native';
-import { UserProvider } from './components/UserContext';
-import { GeoProvider } from './components/GeoContext';
+import { UserProvider } from './components/Context/UserContext';
+import { GeoProvider } from './components/Context/GeoContext';
 import Start from './components/Start';
 import Home from './components/Home/Home';
-import RegisterPhoneScreen from './components/Auth/RegisterPhoneScreen';
-import RegisterDataScreen from './components/Auth/RegisterDataScreen';
-import Login from './components/Auth/Login';
-import RequestCodeScreen from './components/Auth/RequestCodeScreen';
-import ResetPasswordScreen from './components/Auth/ResetPasswordScreen';
-import ResetPassCode from './components/Auth/ResetPassCode';
+import RegisterPhoneScreen from './components/Auth/Register/RegisterPhoneScreen';
+import RegisterDataScreen from './components/Auth/Register/RegisterDataScreen';
+import Login from './components/Auth/Login/Login';
+import RequestCodeScreen from './components/Auth/Restore/RequestCodeScreen';
+import ResetPasswordScreen from './components/Auth/Restore/ResetPasswordScreen';
+import ResetPassCode from './components/Auth/Restore/ResetPassCode';
 import VisicomSearchWithSuggestions from './components/Home/Suggestion/VisicomSearchWithSuggestions';
-import CalculateCostButton from './components/Home/CalculateCostButton';
+import CalculateCostButton from './components/Home/Cost/CalculateCostButton';
 
 const Stack = createStackNavigator();
 

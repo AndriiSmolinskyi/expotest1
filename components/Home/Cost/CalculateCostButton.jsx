@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { ServerApi } from '../../ServerApi';
-import { UserContext } from '../UserContext'; 
+import { ServerApi } from '../../../ServerApi';
+import { UserContext } from '../../Context/UserContext'; 
 import { encode } from 'base-64';
 
 export const CalculateCostButton = () => {
@@ -13,20 +13,25 @@ export const CalculateCostButton = () => {
   const handleCalculateCost = async () => {
     const credentials = `${user.phone}:${user.hashedPassword}`;
     const base64Credentials = encode(credentials);
-    console.log(`login ${user.phone} password ${user.hashedPassword} row ${credentials} base64 ${base64Credentials}`)
+    
     const requestData = {
       reservation: false,
-      wagon: true,
+      calculated_tariff_names: [
+        "Базовый",
+        "Универсал",
+        "Бизнес-класс",
+        "Микроавтобус"
+        ],
       baggage: true,
       taxiColumnId: 0,
       route: [
-        {"name": "вход м.Шевченко.","lat": 50.474613, "lng": 30.506389},
-        {"name": "м.Иподром.","lat": 50.377615, "lng": 30.468195}
+        {"name": "Київ, Перемоги просп., 37 корп. 7" ,"lat": 30.458361, "lng": 50.448979},
+        {"name": "Київ, Лаврська (Івана Мазепи) вул., 15 корп. 42","lat": 30.56173, "lng": 50.43423}
       ]
     };
 
     try {
-      const response = await axios.post(`${ServerApi}weborders/cost`, requestData, {
+      const response = await axios.post(`${ServerApi}weborders/tariffs/cost`, requestData, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json; charset=utf-8',
@@ -36,6 +41,7 @@ export const CalculateCostButton = () => {
       });
     
       const responseData = response.data;
+      console.log(response.data)
       setResponseText(responseData); 
     } catch (error) {
       if (error.response.status === 401) {
@@ -48,27 +54,9 @@ export const CalculateCostButton = () => {
 
   };
 
-  const handleGetVersion = async () => {
-    try {
-      const response = await axios.get(`${ServerApi}version`, {
-        headers: {
-          Accept: 'application/json',
-        }
-      });
-
-      const versionData = response.data;
-      setVersionResponse(versionData.version);
-      
-    } catch (error) {
-      console.error('Error getting version:', error);
-      setVersionResponse('Error getting version');
-    }
-  };
-
   return (
     <View style={styles.container}>
     <Button title="Calculate Cost" onPress={handleCalculateCost} />
-    <Button title="Get Version" onPress={handleGetVersion} />
     <Text style={styles.responseText}>
       <Text>UID: {responseText.dispatching_order_uid}</Text>
       <Text>Order Cost: {responseText.order_cost}{responseText.currency}</Text>
