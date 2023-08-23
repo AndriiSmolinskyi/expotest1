@@ -1,19 +1,3 @@
-// import React, { createContext, useState } from 'react';
-
-// const GeoContext = createContext();
-
-// const GeoProvider = ({ children }) => {
-//   const [geo, setGeo] = useState(null);
-
-//   return (
-//     <GeoContext.Provider value={{ geo, setGeo }}>
-//       {children}
-//     </GeoContext.Provider>
-//   );
-// };
-
-// export { GeoContext, GeoProvider };
-
 import React, { createContext, useState } from 'react';
 
 const GeoContext = createContext();

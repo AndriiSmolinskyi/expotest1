@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar, Text } from 'react-native';
 import { UserProvider } from './components/Context/UserContext';
 import { GeoProvider } from './components/Context/GeoContext';
+import { GeoAdressProvider } from './components/Context/GeoAdressContext';
 import Start from './components/Start';
 import Home from './components/Home/Home';
 import RegisterPhoneScreen from './components/Auth/Register/RegisterPhoneScreen';
@@ -22,25 +23,27 @@ const App = () => {
   return (
     <NavigationContainer>
       <UserProvider>
-        <GeoProvider>
-          <StatusBar />
-          <Stack.Navigator
-            // screenOptions={{
-            //   headerShown: false, // Приховати заголовок та стрілку "назад"
-            // }}
-          >
-            <Stack.Screen name="Start" component={Start} />
-            <Stack.Screen name="RegisterPhone" component={RegisterPhoneScreen} />
-            <Stack.Screen name="RegisterData" component={RegisterDataScreen} />        
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="RequestCodeScreen" component={RequestCodeScreen} />
-            <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
-            <Stack.Screen name="ResetPassCode" component={ResetPassCode} />
-            <Stack.Screen name="VisicomSearchWithSuggestions" component={VisicomSearchWithSuggestions} />
-            <Stack.Screen name="CalculateCostButton" component={CalculateCostButton} />
-          </Stack.Navigator>
-        </GeoProvider>
+        <GeoAdressProvider>
+          <GeoProvider>
+            <StatusBar />
+            <Stack.Navigator
+              // screenOptions={{
+              //   headerShown: false, // Приховати заголовок та стрілку "назад"
+              // }}
+            >
+              <Stack.Screen name="Start" component={Start} />
+              <Stack.Screen name="RegisterPhone" component={RegisterPhoneScreen} />
+              <Stack.Screen name="RegisterData" component={RegisterDataScreen} />        
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="RequestCodeScreen" component={RequestCodeScreen} />
+              <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
+              <Stack.Screen name="ResetPassCode" component={ResetPassCode} />
+              <Stack.Screen name="VisicomSearchWithSuggestions" component={VisicomSearchWithSuggestions} />
+              <Stack.Screen name="CalculateCostButton" component={CalculateCostButton} />
+            </Stack.Navigator>
+          </GeoProvider>
+        </GeoAdressProvider>
       </UserProvider>
     </NavigationContainer>
   );

@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { UserContext } from '../Context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LiveSearchComponent from './Map/LiveSearchComponent';
+import CalculateCostButton from './Cost/CalculateCostButton';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -24,10 +25,10 @@ export const Home = ({ navigation }) => {
     <View style={styles.container}>
       <Text>Welcome to Home Page!</Text>
       <Text>Phone: {user ? user.phone : ''}</Text>
-      <Button title="Logout" onPress={handleLogout} />
-      <Button title="VisicomSearchWithSuggestions" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
-      <Button title="CalculateCostButton" onPress={() => navigation.navigate('CalculateCostButton')} />
+      <Button title="Logout" onPress={handleLogout} />    
       <LiveSearchComponent></LiveSearchComponent>
+      <Button title="VisicomSearchWithSuggestions" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
+      <CalculateCostButton></CalculateCostButton>
     </View>
   );
 };

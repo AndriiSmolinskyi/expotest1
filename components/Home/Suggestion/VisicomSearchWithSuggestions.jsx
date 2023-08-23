@@ -1,15 +1,17 @@
 import React, { useState, useContext } from 'react';
-import { View } from 'react-native';
+import { View, Button } from 'react-native';
 import axios from 'axios';
 import { SearchWithSuggestions } from './SearchWithSuggestions';
 import { GeoContext } from '../../Context/GeoContext';
+import { GeoAdressContext } from '../../Context/GeoAdressContext';
 
-export const VisicomSearchWithSuggestions = () => {
+export const VisicomSearchWithSuggestions = ({ navigation }) => {
   const [fromSuggestion, setFromSuggestion] = useState({ query: '', data: null });
   const [toSuggestion, setToSuggestion] = useState({ query: '', data: null });
   const [timer, setTimer] = useState(null);
   const { setStartCoords, setEndCoords } = useContext(GeoContext);
-
+  const { setStartLocation, setEndLocation } = useContext(GeoAdressContext);
+  
   const handleSearchChange = async (text, setSuggestion) => {
     setSuggestion((prevSuggestion) => ({ ...prevSuggestion, query: text }));
 
@@ -43,13 +45,16 @@ export const VisicomSearchWithSuggestions = () => {
     setTimer(newTimer);
   };
 
-  const handleSuggestionChange = (suggestion, setSuggestion, setCords) => {
-    setCords(suggestion.geo_centroid.coordinates)
+  const handleSuggestionChange = (suggestion, setSuggestion, setCords, setLocation) => {
+    const { coordinates } = suggestion.geo_centroid;
+    setCords(coordinates);
     let inputText;
     if (suggestion.properties.address) {
       inputText = suggestion.properties.address;
+      setLocation({"name": suggestion.properties.address, "lat": coordinates[0], "lng": coordinates[1]})
     } else {
       inputText = suggestion.properties.name;
+      setLocation({"name": suggestion.properties.name, "lat": coordinates[0], "lng": coordinates[1]})
     }
     setSuggestion({ query: inputText, data: null });
   };
@@ -60,14 +65,15 @@ export const VisicomSearchWithSuggestions = () => {
         placeholder="Звідки їдемо?"
         suggestion={fromSuggestion}
         onSearchChange={(text) => handleSearchChange(text, setFromSuggestion)}
-        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setFromSuggestion, setStartCoords)}
+        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setFromSuggestion, setStartCoords, setStartLocation)}
       />
       <SearchWithSuggestions
         placeholder="Куди їдемо?"
         suggestion={toSuggestion}
         onSearchChange={(text) => handleSearchChange(text, setToSuggestion)}
-        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setToSuggestion, setEndCoords)}
+        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setToSuggestion, setEndCoords, setEndLocation)}
       />
+      <Button title="Побудувати маршрут" onPress={() => navigation.navigate('Home')} />
     </View>
   );
 };
