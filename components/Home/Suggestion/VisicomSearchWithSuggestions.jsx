@@ -40,7 +40,7 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
         console.error('Error fetching suggestions:', error);
         setSuggestion((prevSuggestion) => ({ ...prevSuggestion, data: null }));
       }
-    }, 1500);
+    }, 1000);
 
     setTimer(newTimer);
   };

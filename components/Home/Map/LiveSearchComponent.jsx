@@ -115,8 +115,8 @@ export const LiveSearchComponent = () => {
         initialRegion={{
           latitude: 50.455002,
           longitude: 30.511284,
-          latitudeDelta: 1.2,  // Змініть це значення для більшого зуму
-          longitudeDelta: 1.2, // Змініть це значення для більшого зуму
+          latitudeDelta: 0.7,  // Змініть це значення для більшого зуму
+          longitudeDelta: 0.7, // Змініть це значення для більшого зуму
         }}
       >
         {route.length > 0 && (
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-    marginTop: 20,
   },
 });
 
