@@ -10,7 +10,6 @@ export const TrafficCard = ({ tariffData }) => {
       {order_cost_details ? (
         <>
           <Text>{order_cost_details.order_cost}{order_cost_details.currency}</Text>
-          <Text>Can Pay Bonuses: {order_cost_details.can_pay_bonuses ? 'TRUE' : 'FALSE'}</Text>
         </>
       ) : (
         <Text>No data available</Text>

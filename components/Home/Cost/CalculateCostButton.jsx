@@ -18,13 +18,17 @@ export const CalculateCostButton = () => {
 
     const requestData = {
       reservation: false,
+      comment: '',
+      baggage: false,
+      animal: false,
+      conditioner: false,
+      payment_type: null,
       calculated_tariff_names: [
         "Базовый",
         "Универсал",
         "Бизнес-класс",
         "Микроавтобус"
       ],
-      baggage: true,
       taxiColumnId: 0,
       route: [
         {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
@@ -43,6 +47,7 @@ export const CalculateCostButton = () => {
       });
     
       const responseData = response.data;
+      console.log(response.data)
       setTariffData(responseData); 
     } catch (error) {
       if (error.response.status === 401) {
@@ -53,6 +58,8 @@ export const CalculateCostButton = () => {
     }
   };
 
+
+
   useEffect(() => {
     if (startLocation && endLocation) {
       handleCalculateCost();
@@ -61,7 +68,6 @@ export const CalculateCostButton = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Traffic Tariffs:</Text>
       <View style={styles.trafficContainer}>
         {tariffData.map((tariff, index) => (
           <TrafficCard key={index} tariffData={tariff} />
@@ -74,13 +80,11 @@ export const CalculateCostButton = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginTop: 20,
   },
   trafficContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginTop: 10,
   },
   responseText: {
     marginTop: 20,
