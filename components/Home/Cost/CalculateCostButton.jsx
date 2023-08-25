@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { TrafficCard } from './TrafficCard'; 
-import { BtnFunc } from './BtnFunc';
 import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
 import { UserContext } from '../../Context/UserContext'; 
@@ -12,6 +11,15 @@ export const CalculateCostButton = () => {
   const [tariffData, setTariffData] = useState([]);
   const { user } = useContext(UserContext); 
   const { startLocation, endLocation } = useContext(GeoAdressContext); 
+  const [baggage, setBaggage] = useState(false);
+  const [animal, setAnimal] = useState(false);
+  const [conditioner, setConditioner] = useState(false);
+
+  const handleToggle = (setStatus) => {
+    return () => { 
+      setStatus(prevStatus => !prevStatus);
+    };
+  };
 
   const handleCalculateCost = async () => {
     const credentials = `${user.phone}:${user.hashedPassword}`;
@@ -64,7 +72,7 @@ export const CalculateCostButton = () => {
     if (startLocation && endLocation) {
       handleCalculateCost();
     }
-  }, [startLocation, endLocation]);
+  }, [startLocation, endLocation, baggage, animal, conditioner]);
 
   return (
     <View style={styles.container}>     
@@ -73,7 +81,11 @@ export const CalculateCostButton = () => {
           <TrafficCard key={index} tariffData={tariff} />
         ))}
       </View>
-      <BtnFunc></BtnFunc>
+      <View style={styles.buttonContainer}>
+        <Button title={`baggage ${baggage ? 0 : 1}`} onPress={handleToggle(setBaggage)} />
+        <Button title={`animal ${animal ? 0 : 1}`} onPress={handleToggle(setAnimal)} />
+        <Button title={`conditioner ${conditioner ? 0 : 1}`} onPress={handleToggle(setConditioner)} />
+      </View>
     </View>
   );
 };
