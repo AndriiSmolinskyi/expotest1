@@ -33,7 +33,7 @@ const Start = ({ navigation }) => {
           // navigation.navigate('Home');
           navigation.reset({
             index: 0,
-            routes: [{ name: 'Home' }], // Переходимо на Home і очищаємо стек навігації
+            routes: [{ name: 'Home' }],
           });
         } 
         else {

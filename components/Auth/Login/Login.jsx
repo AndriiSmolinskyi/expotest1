@@ -40,6 +40,9 @@ export const Login = ({ navigation }) => {
           WebOrdersApiClientAppToken: 'App_Token', // Замініть на отриманий токен з сервера
         };
         setUser(user);
+        navigation.reset({
+          index: 0,
+        });
 
         AsyncStorage.setItem('user', JSON.stringify(user));
 
