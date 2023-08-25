@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { TrafficCard } from './TrafficCard'; // Шлях до вашого дочірнього компонента
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { TrafficCard } from './TrafficCard'; 
+import { BtnFunc } from './BtnFunc';
 import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
 import { UserContext } from '../../Context/UserContext'; 
@@ -36,6 +37,7 @@ export const CalculateCostButton = () => {
       ]
     };
 
+
     try {
       const response = await axios.post(`${ServerApi}weborders/tariffs/cost`, requestData, {
         headers: {
@@ -58,8 +60,6 @@ export const CalculateCostButton = () => {
     }
   };
 
-
-
   useEffect(() => {
     if (startLocation && endLocation) {
       handleCalculateCost();
@@ -67,7 +67,7 @@ export const CalculateCostButton = () => {
   }, [startLocation, endLocation]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}>     
       <View style={styles.trafficContainer}>
         {tariffData.map((tariff, index) => (
           <TrafficCard key={index} tariffData={tariff} />
