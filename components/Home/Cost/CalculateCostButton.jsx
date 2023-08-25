@@ -73,6 +73,7 @@ export const CalculateCostButton = () => {
           <TrafficCard key={index} tariffData={tariff} />
         ))}
       </View>
+      <BtnFunc></BtnFunc>
     </View>
   );
 };
