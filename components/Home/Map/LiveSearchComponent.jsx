@@ -115,8 +115,8 @@ export const LiveSearchComponent = () => {
         initialRegion={{
           latitude: 50.455002,
           longitude: 30.511284,
-          latitudeDelta: 0.7,  // Змініть це значення для більшого зуму
-          longitudeDelta: 0.7, // Змініть це значення для більшого зуму
+          latitudeDelta: 0.3,  
+          longitudeDelta: 0.3, 
         }}
       >
         {route.length > 0 && (

@@ -40,13 +40,13 @@ export const Login = ({ navigation }) => {
           WebOrdersApiClientAppToken: 'App_Token', // Замініть на отриманий токен з сервера
         };
         setUser(user);
-        navigation.reset({
-          index: 0,
-        });
 
         AsyncStorage.setItem('user', JSON.stringify(user));
 
-        navigation.navigate('Home');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home' }],
+        });
       } else {
         console.error('Error logging in:', response.data);
       }

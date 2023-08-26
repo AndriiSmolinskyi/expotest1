@@ -28,23 +28,26 @@ export const CalculateCostButton = () => {
     const requestData = {
       reservation: false,
       comment: '',
-      baggage: false,
-      animal: false,
-      conditioner: false,
+      baggage: baggage,
+      animal: animal,
+      conditioner: conditioner,
       payment_type: null,
       calculated_tariff_names: [
         "Базовый",
         "Универсал",
         "Бизнес-класс",
-        "Микроавтобус"
+        "Микроавтобус",
+        "Премиум-класс",
+        "Эконом-класс",
       ],
       taxiColumnId: 0,
+      extra_charge_codes: [ "CONDIT", "ANIMAL", "ENGLISH", "BABY_SEAT"],
       route: [
         {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
         {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
       ]
     };
-
+    console.log(requestData)
 
     try {
       const response = await axios.post(`${ServerApi}weborders/tariffs/cost`, requestData, {
@@ -74,6 +77,16 @@ export const CalculateCostButton = () => {
     }
   }, [startLocation, endLocation, baggage, animal, conditioner]);
 
+  const handleFetchSettings = async () => {
+    try {
+      const response = await axios.get(`${ServerApi}settings`);
+      const settingsData = response.data;
+      console.log("Settings Data:", settingsData);
+    } catch (error) {
+      console.error('Error fetching settings:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>     
       <View style={styles.trafficContainer}>
@@ -82,9 +95,10 @@ export const CalculateCostButton = () => {
         ))}
       </View>
       <View style={styles.buttonContainer}>
-        <Button title={`baggage ${baggage ? 0 : 1}`} onPress={handleToggle(setBaggage)} />
+        <Button title={`baggage ${baggage ? 0 : 1}`} onPress={handleToggle(setBaggage)}/>
         <Button title={`animal ${animal ? 0 : 1}`} onPress={handleToggle(setAnimal)} />
         <Button title={`conditioner ${conditioner ? 0 : 1}`} onPress={handleToggle(setConditioner)} />
+        <Button title="Fetch Settings" onPress={handleFetchSettings} />
       </View>
     </View>
   );
@@ -103,6 +117,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: 'monospace',
   },
+  buttonContainer:{
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  }
 });
 
 export default CalculateCostButton;
