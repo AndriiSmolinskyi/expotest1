@@ -1,4 +1,4 @@
-// // http://31.43.107.151:7321/api/
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar, Text } from 'react-native';
@@ -30,9 +30,9 @@ const App = () => {
             <ServiceProvider>
               <StatusBar />
               <Stack.Navigator
-                // screenOptions={{
-                //   headerShown: false, // Приховати заголовок та стрілку "назад"
-                // }}
+                screenOptions={{
+                  headerShown: false, // Приховати заголовок та стрілку "назад"
+                }}
               >
                 <Stack.Screen name="Start" component={Start} />
                 <Stack.Screen name="RegisterPhone" component={RegisterPhoneScreen} />
