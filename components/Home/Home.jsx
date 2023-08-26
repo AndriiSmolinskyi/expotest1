@@ -4,7 +4,6 @@ import { UserContext } from '../Context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LiveSearchComponent from './Map/LiveSearchComponent';
 import CalculateCostButton from './Cost/CalculateCostButton';
-import VisicomSearchWithSuggestions from './Suggestion/VisicomSearchWithSuggestions';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -29,7 +28,7 @@ export const Home = ({ navigation }) => {
       <Button title="Logout" onPress={handleLogout} />     */}
       <LiveSearchComponent></LiveSearchComponent>
       <Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
-      <CalculateCostButton></CalculateCostButton>
+      <CalculateCostButton></CalculateCostButton>     
     </View>
   );
 };

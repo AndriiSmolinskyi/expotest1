@@ -105,13 +105,13 @@ import { ServerApi } from '../../../ServerApi';
 import { UserContext } from '../../Context/UserContext'; 
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
 import { encode } from 'base-64';
-import { ServicesSelection } from './ServicesSelection';
+import { ServiceContext } from "../../Context/ServiceContext";
 
-export const CalculateCostButton = () => {
+export const CalculateCostButton = ({navigation}) => {
   const [tariffData, setTariffData] = useState([]);
   const { user } = useContext(UserContext); 
   const { startLocation, endLocation } = useContext(GeoAdressContext); 
-  const [selectedServices, setSelectedServices] = useState([]);
+  const { service } = useContext(ServiceContext);
 
   const handleCalculateCost = async () => {
     const credentials = `${user.phone}:${user.hashedPassword}`;
@@ -130,14 +130,14 @@ export const CalculateCostButton = () => {
         "Эконом-класс",
       ],
       taxiColumnId: 0,
-      extra_charge_codes: selectedServices,
+      extra_charge_codes: service,
       route: [
         {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
         {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
       ]
     };
     console.log(requestData)
-    console.log(`-----------------------------`)
+    console.log('-------------------------')
 
     try {
       const response = await axios.post(`${ServerApi}weborders/tariffs/cost`, requestData, {
@@ -165,7 +165,7 @@ export const CalculateCostButton = () => {
     if (startLocation && endLocation) {
       handleCalculateCost();
     }
-  }, [startLocation, endLocation, selectedServices]);
+  }, [startLocation, endLocation, service]);
 
   return (
     <View style={styles.container}>     
@@ -174,10 +174,7 @@ export const CalculateCostButton = () => {
           <TrafficCard key={index} tariffData={tariff} />
         ))}
       </View>
-      <ServicesSelection
-        selectedServices={selectedServices}
-        setSelectedServices={setSelectedServices}
-      />
+      <Button title="ServicesSelection" onPress={() => navigation.navigate('ServicesSelection')} />
     </View>
   );
 };
