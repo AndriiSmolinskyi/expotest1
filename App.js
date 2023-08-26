@@ -15,6 +15,7 @@ import ResetPasswordScreen from './components/Auth/Restore/ResetPasswordScreen';
 import ResetPassCode from './components/Auth/Restore/ResetPassCode';
 import VisicomSearchWithSuggestions from './components/Home/Suggestion/VisicomSearchWithSuggestions';
 import CalculateCostButton from './components/Home/Cost/CalculateCostButton';
+import { ServicesSelection } from './components/Home/Cost/ServicesSelection';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ const App = () => {
               <Stack.Screen name="ResetPassCode" component={ResetPassCode} />
               <Stack.Screen name="VisicomSearchWithSuggestions" component={VisicomSearchWithSuggestions} />
               <Stack.Screen name="CalculateCostButton" component={CalculateCostButton} />
+              <Stack.Screen name="ServicesSelection" component={ServicesSelection} />
             </Stack.Navigator>
           </GeoProvider>
         </GeoAdressProvider>
