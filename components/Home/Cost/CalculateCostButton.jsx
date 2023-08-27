@@ -62,6 +62,7 @@ export const CalculateCostButton = ({navigation}) => {
     }
   };
 
+
   useEffect(() => {
     if (startLocation && endLocation) {
       handleCalculateCost();

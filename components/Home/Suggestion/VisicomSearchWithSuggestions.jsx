@@ -51,10 +51,10 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
     let inputText;
     if (suggestion.properties.address) {
       inputText = suggestion.properties.address;
-      setLocation({"name": suggestion.properties.address, "lat": coordinates[0], "lng": coordinates[1]})
+      setLocation({"name": suggestion.properties.address, "lat": coordinates[1], "lng": coordinates[0]})
     } else {
       inputText = suggestion.properties.name;
-      setLocation({"name": suggestion.properties.name, "lat": coordinates[0], "lng": coordinates[1]})
+      setLocation({"name": suggestion.properties.name, "lat": coordinates[1], "lng": coordinates[0]})
     }
     setSuggestion({ query: inputText, data: null });
   };
