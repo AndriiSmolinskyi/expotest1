@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { TrafficCard } from './TrafficCard'; 
 import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
@@ -13,6 +13,7 @@ export const CalculateCostButton = ({navigation}) => {
   const { user } = useContext(UserContext); 
   const { startLocation, endLocation } = useContext(GeoAdressContext); 
   const { service } = useContext(ServiceContext);
+  const [ selectedTariff, setSelectedTariff ] = useState(null);
 
   const handleCalculateCost = async () => {
     const credentials = `${user.phone}:${user.hashedPassword}`;
@@ -51,8 +52,15 @@ export const CalculateCostButton = ({navigation}) => {
       });
     
       const responseData = response.data;
-      console.log(response.data)
-      setTariffData(responseData); 
+      console.log(response.data); 
+      setTariffData(responseData);     
+      if(selectedTariff === null){
+        setSelectedTariff(responseData[0]);
+      }    
+      if (selectedTariff) {
+        const updatedSelectedTariff = responseData.find(tariff => tariff.flexible_tariff_name === selectedTariff.flexible_tariff_name);
+        setSelectedTariff(updatedSelectedTariff);
+      }  
     } catch (error) {
       if (error.response.status === 401) {
         console.error('Error calculating cost: Unauthorized');
@@ -73,9 +81,15 @@ export const CalculateCostButton = ({navigation}) => {
     <View style={styles.container}>     
       <View style={styles.trafficContainer}>
         {tariffData.map((tariff, index) => (
-          <TrafficCard key={index} tariffData={tariff} />
+          <TrafficCard key={index} tariffData={tariff}             
+          selectedTariff={selectedTariff} 
+          setSelectedTariff={setSelectedTariff} />            
         ))}
-      </View>
+      </View>    
+      {selectedTariff 
+        ? (<Text>{selectedTariff.order_cost_details.order_cost}</Text>) 
+        : (<Text></Text>)
+      }
       <Button title="ServicesSelection" onPress={() => navigation.navigate('ServicesSelection')} />
     </View>
   );
@@ -93,7 +107,7 @@ const styles = StyleSheet.create({
   responseText: {
     marginTop: 20,
     fontFamily: 'monospace',
-  }
+  },
 });
 
 export default CalculateCostButton;

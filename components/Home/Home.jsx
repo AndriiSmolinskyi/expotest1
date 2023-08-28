@@ -4,9 +4,11 @@ import { UserContext } from '../Context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LiveSearchComponent from './Map/LiveSearchComponent';
 import CalculateCostButton from './Cost/CalculateCostButton';
+import { GeoAdressContext } from '../Context/GeoAdressContext';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
+  const { startLocation, endLocation } = useContext(GeoAdressContext); 
 
   const handleLogout = async () => {  
     try {
@@ -28,7 +30,11 @@ export const Home = ({ navigation }) => {
       <Button title="Logout" onPress={handleLogout} />     */}
       <LiveSearchComponent></LiveSearchComponent>
       <Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
-      <CalculateCostButton navigation={navigation}></CalculateCostButton>     
+      {startLocation && endLocation 
+        ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
+        : (<Text></Text>)
+      }
+         
     </View>
   );
 };
