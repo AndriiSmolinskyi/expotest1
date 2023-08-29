@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SHA512 from 'crypto-js/sha512';
 
 export const RegisterDataScreen = ({ navigation }) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = async (values) => {
@@ -23,8 +23,7 @@ export const RegisterDataScreen = ({ navigation }) => {
         confirm_password: values.confirmPassword,
         user_first_name: values.name,
       });
-      
-    
+
       if (response.status === 201 || response.status === 200) {
         console.log('User registered successfully!');
         const hashedPassword = SHA512(values.password).toString();

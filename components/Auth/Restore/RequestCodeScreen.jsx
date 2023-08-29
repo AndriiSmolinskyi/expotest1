@@ -22,14 +22,11 @@ export const RequestCodeScreen = ({ navigation }) => {
       }
     } catch (error) {
       if (error.response) {
-        // Якщо сервер відповів з помилкою (мала б бути відповідь зі статусом 4xx або 5xx)
-        Alert.alert('Помилка', error.response.data.message); // або використайте інший ключ для повідомлення про помилку
+        Alert.alert('Помилка', error.response.data.message); 
         Alert.alert('Помилка', error.message);
       } else if (error.request) {
-        // Якщо запит було зроблено, але не отримано відповіді
         console.error('No response received from the server');
       } else {
-        // Якщо сталася якась інша помилка
         console.error('An error occurred while making the request:', error.message);
       }
     }

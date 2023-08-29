@@ -8,6 +8,7 @@ import { GeoAdressContext } from '../../Context/GeoAdressContext';
 import { encode } from 'base-64';
 import { ServiceContext } from "../../Context/ServiceContext";
 import { CommentContext } from '../../Context/CommentContext';
+import { OrderContext } from '../../Context/OrderContext';
 
 export const CalculateCostButton = ({navigation}) => {
   const [ tariffData, setTariffData ] = useState([]);
@@ -16,6 +17,7 @@ export const CalculateCostButton = ({navigation}) => {
   const { service } = useContext(ServiceContext);
   const [ selectedTariff, setSelectedTariff ] = useState(null);
   const { comment } = useContext(CommentContext);
+  const { userData, auth, setAuth, request, setRequest } = useContext(OrderContext)
 
   const handleCalculateCost = async () => {
     const credentials = `${user.phone}:${user.hashedPassword}`;

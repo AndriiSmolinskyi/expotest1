@@ -4,10 +4,12 @@ import axios from 'axios';
 import { ServerApi } from '../ServerApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './Context/UserContext';
+import { OrderContext } from './Context/OrderContext';
 
 
 const Start = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
+  const { setUserData } = useContext(OrderContext)
 
   useEffect(() => {
     checkUserAuthentication();
@@ -27,10 +29,11 @@ const Start = ({ navigation }) => {
         };
 
         const response = await axios.post(`${ServerApi}/account`, requestData);
+        const userFromServer = response.data;
 
         if (response.status === 200) {
-          setUser(user); // Записати дані в UserContext
-          // navigation.navigate('Home');
+          setUser(user);
+          setUserData(userFromServer)      
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }],

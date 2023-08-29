@@ -7,6 +7,7 @@ import SHA512 from 'crypto-js/sha512';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { OrderContext } from '../../Context/OrderContext';
 
 const LoginSchema = Yup.object().shape({
   phone: Yup.string()
@@ -17,6 +18,7 @@ const LoginSchema = Yup.object().shape({
 
 export const Login = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
+  const { setUserData } = useContext(OrderContext)
 
   const handleLogin = async (values) => {
     try {
@@ -27,19 +29,18 @@ export const Login = ({ navigation }) => {
         WebOrdersApiClientAppToken: 'App_Token',
       };
 
-      console.log('Request data:', requestData);
-
       const response = await axios.post(`${ServerApi}/account`, requestData);
-
-      console.log('Response data:', response.data);
-
+      
+      const userFromServer = response.data
+      
       if (response.status === 200) {
         const user = {
           phone: `380${values.phone}`,
           hashedPassword,
-          WebOrdersApiClientAppToken: 'App_Token', // Замініть на отриманий токен з сервера
+          WebOrdersApiClientAppToken: 'App_Token',
         };
         setUser(user);
+        setUserData(userFromServer)
 
         AsyncStorage.setItem('user', JSON.stringify(user));
 
