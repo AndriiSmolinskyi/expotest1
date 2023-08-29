@@ -4,7 +4,7 @@ import { ServiceContext } from "../../Context/ServiceContext";
 
 export const ServicesSelection = ({ navigation }) => {
   const { service, setService } = useContext(ServiceContext);
-  const [selectedServices, setSelectedServices] = useState(service);
+  const [ selectedServices, setSelectedServices ] = useState(service);
 
   const availableServices = [
     "BAGGAGE", "ANIMAL", "CONDIT", "MEET", "COURIER",

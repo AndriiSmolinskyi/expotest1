@@ -7,6 +7,7 @@ import { UserContext } from '../../Context/UserContext';
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
 import { encode } from 'base-64';
 import { ServiceContext } from "../../Context/ServiceContext";
+import { CommentContext } from '../../Context/CommentContext';
 
 export const CalculateCostButton = ({navigation}) => {
   const [ tariffData, setTariffData ] = useState([]);
@@ -14,6 +15,7 @@ export const CalculateCostButton = ({navigation}) => {
   const { startLocation, endLocation } = useContext(GeoAdressContext); 
   const { service } = useContext(ServiceContext);
   const [ selectedTariff, setSelectedTariff ] = useState(null);
+  const { comment } = useContext(CommentContext);
 
   const handleCalculateCost = async () => {
     const credentials = `${user.phone}:${user.hashedPassword}`;
@@ -21,7 +23,7 @@ export const CalculateCostButton = ({navigation}) => {
 
     const requestData = {
       reservation: false,
-      comment: '',
+      comment: comment,
       payment_type: null,
       calculated_tariff_names: [
         "Базовый",
@@ -75,7 +77,7 @@ export const CalculateCostButton = ({navigation}) => {
     if (startLocation && endLocation) {
       handleCalculateCost();
     }
-  }, [startLocation, endLocation, service]);
+  }, [startLocation, endLocation, service, comment]);
 
   return (
     <View style={styles.container}>     
@@ -91,6 +93,7 @@ export const CalculateCostButton = ({navigation}) => {
         : (<Text></Text>)
       }
       <Button title="ServicesSelection" onPress={() => navigation.navigate('ServicesSelection')} />
+      <Button title="Comment" onPress={() => navigation.navigate('Comment')} />
     </View>
   );
 };
