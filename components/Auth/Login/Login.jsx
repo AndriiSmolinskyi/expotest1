@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { OrderContext } from '../../Context/OrderContext';
+import { encode } from 'base-64';
 
 const LoginSchema = Yup.object().shape({
   phone: Yup.string()
@@ -18,7 +19,7 @@ const LoginSchema = Yup.object().shape({
 
 export const Login = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
-  const { setUserData } = useContext(OrderContext)
+  const { setUserData, setAuth } = useContext(OrderContext)
 
   const handleLogin = async (values) => {
     try {
@@ -40,10 +41,12 @@ export const Login = ({ navigation }) => {
           WebOrdersApiClientAppToken: 'App_Token',
         };
         setUser(user);
-        setUserData(userFromServer)
-
         AsyncStorage.setItem('user', JSON.stringify(user));
-
+        const credentials = `${user.phone}:${user.hashedPassword}`;
+        const base64Credentials = encode(credentials);
+        setUserData(userFromServer)
+        setAuth(`Basic ${base64Credentials}`)
+        
         navigation.reset({
           index: 0,
           routes: [{ name: 'Home' }],

@@ -5,21 +5,18 @@ import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
 import { UserContext } from '../../Context/UserContext'; 
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
-import { encode } from 'base-64';
 import { ServiceContext } from "../../Context/ServiceContext";
 import { OrderContext } from '../../Context/OrderContext';
 
 export const CalculateCostButton = ({navigation}) => {
   const [ tariffData, setTariffData ] = useState([]);
   const [ selectedTariff, setSelectedTariff ] = useState(null);
-  const { setAuth, setRequest, auth } = useContext(OrderContext)
-  const { startLocation, endLocation } = useContext(GeoAdressContext); 
+  const { setRequest, auth } = useContext(OrderContext)
+  const { startLocation, endLocation, clearGeoData } = useContext(GeoAdressContext); 
   const { service, comment, payment } = useContext(ServiceContext);
-  const { user } = useContext(UserContext); 
-  
+
   const handleCalculateCost = async () => {
-    const credentials = `${user.phone}:${user.hashedPassword}`;
-    const base64Credentials = encode(credentials);
+
 
     const requestData = {
       reservation: false,
@@ -46,7 +43,7 @@ export const CalculateCostButton = ({navigation}) => {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json; charset=utf-8',
-          'Authorization': `Basic ${base64Credentials}`,
+          'Authorization': auth,
           'X-API-VERSION': '1.52.1' 
         }
       });
@@ -62,12 +59,6 @@ export const CalculateCostButton = ({navigation}) => {
         const updatedSelectedTariff = responseData.find(tariff => tariff.flexible_tariff_name === selectedTariff.flexible_tariff_name);
         setSelectedTariff(updatedSelectedTariff);
       }  
-
-      const auth = {
-        authCode: `Basic ${base64Credentials}`,
-        version: '1.52.1', 
-      }
-      setAuth(auth)
 
     } catch (error) {
       if (error.response.status === 401) {
@@ -96,9 +87,8 @@ export const CalculateCostButton = ({navigation}) => {
         {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
       ]
     }
-    console.log(requestToOrder)
-    setRequest(requestToOrder)
-    console.log(auth)
+    setRequest(requestToOrder);
+    clearGeoData()
   }
 
   return (

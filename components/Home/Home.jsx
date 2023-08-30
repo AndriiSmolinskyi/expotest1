@@ -7,16 +7,24 @@ import CalculateCostButton from './Cost/CalculateCostButton';
 import { GeoAdressContext } from '../Context/GeoAdressContext';
 import { OrderContext } from '../Context/OrderContext';
 import { Order } from './Order/Order';
+import { GeoContext } from '../Context/GeoContext';
+import { ServiceContext } from '../Context/ServiceContext';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
-  const { startLocation, endLocation } = useContext(GeoAdressContext); 
-  const { request, auth } = useContext(OrderContext)
-
+  const { startLocation, endLocation, clearGeoData } = useContext(GeoAdressContext); 
+  const { request, auth, clearOrderData } = useContext(OrderContext);
+  const { clearGeoCoords } = useContext(GeoContext);
+  const { clearServiceData } = useContext(ServiceContext)
+  
   const handleLogout = async () => {  
     try {
       await AsyncStorage.removeItem('user');
-      setUser(null);
+      setUser(null)
+      clearGeoData();
+      clearOrderData();
+      clearGeoCoords();
+      clearServiceData();
       navigation.reset({
         index: 0,
         routes: [{ name: 'Start' }],

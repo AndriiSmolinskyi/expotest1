@@ -5,11 +5,11 @@ import { ServerApi } from '../ServerApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './Context/UserContext';
 import { OrderContext } from './Context/OrderContext';
-
+import { encode } from 'base-64';
 
 const Start = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
-  const { setUserData } = useContext(OrderContext)
+  const { setUserData, setAuth } = useContext(OrderContext)
 
   useEffect(() => {
     checkUserAuthentication();
@@ -33,7 +33,10 @@ const Start = ({ navigation }) => {
 
         if (response.status === 200) {
           setUser(user);
-          setUserData(userFromServer)      
+          setUserData(userFromServer)         
+          const credentials = `${user.phone}:${user.hashedPassword}`;
+          const base64Credentials = encode(credentials); 
+          setAuth(`Basic ${base64Credentials}`)     
           navigation.reset({
             index: 0,
             routes: [{ name: 'Home' }],

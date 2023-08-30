@@ -2,16 +2,12 @@ import { OrderContext } from "../../Context/OrderContext";
 import { useContext } from "react";
 import { View, Text, Button } from "react-native";
 import { ServerApi } from "../../../ServerApi";
-import { encode } from 'base-64';
 import { UserContext } from '../../Context/UserContext'; 
 import axios from "axios";
 
 export const Order = () =>{
     const {userData, setUserData, auth, setAuth, request, setRequest, uid, setUid} = useContext(OrderContext)
-    const { user } = useContext(UserContext); 
-    const credentials = `${user.phone}:${user.hashedPassword}`;
-    const base64Credentials = encode(credentials);
-
+    
     const requestData = {
         user_full_name: userData.user_full_name,
         user_phone: userData.user_phone,
@@ -29,8 +25,30 @@ export const Order = () =>{
                 headers:{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json; charset=utf-8',
-                    'Authorization': `Basic ${base64Credentials}`,
+                    'Authorization': auth,
                     'X-API-VERSION': '1.52.1'
+                }
+            })
+
+            const responseData = response.data;
+            const orderId = response.data.dispatching_order_uid
+            setUid(orderId)
+            console.log(orderId)
+        } catch (error){
+            if (error.response.status === 401) {
+                console.error('Error calculating cost: Unauthorized');
+            } else {
+                console.error(error.response.data.message);
+            }
+        }
+    }
+
+    const statusOrder = async () => {
+        try {
+            const response = await axios.get(`${ServerApi}/weborders/${uid}`, {
+                headers:{
+                    'Accept': 'application/json',
+                    'Authorization': auth
                 }
             })
 
@@ -40,15 +58,21 @@ export const Order = () =>{
             if (error.response.status === 401) {
                 console.error('Error calculating cost: Unauthorized');
             } else {
-                throw error;
+                console.error(error);
             }
         }
+    }
+
+    const deleteOrder = () => {
+        setRequest(null)
     }
 
     return(
         <View>
             <Text>hy</Text>
             <Button title="Make Order" onPress={makeOrder}/>
+            <Button title="uid" onPress={statusOrder}/>
+            <Button title="deleteOrder" onPress={deleteOrder}/>
         </View>    
     )
 }

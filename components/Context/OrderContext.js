@@ -8,26 +8,18 @@ const OrderProvider = ({ children }) => {
     const [ request, setRequest ] = useState(null);
     const [ uid, setUid ] = useState(null);
 
+    const clearOrderData = () => {
+        setUserData(null);
+        setAuth(null);
+        setRequest(null);
+        setUid(null);
+      };
+
     return (
-        <OrderContext.Provider value={{ userData, setUserData, auth, setAuth, request, setRequest, uid, setUid }}>
+        <OrderContext.Provider value={{ userData, setUserData, auth, setAuth, request, setRequest, uid, setUid, clearOrderData }}>
         {children}
         </OrderContext.Provider>
     );
 };
 
 export { OrderContext, OrderProvider };
-
-
-      // const requestToOrder = {
-      //   tariff: tarOr,
-      //   comm: comment,
-      //   pay: payment,
-      //   taxiCol: 0,
-      //   serviceAdd: service,   
-      //   road: [
-      //     {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
-      //     {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
-      //   ]
-      // }
-
-      // setRequest(requestToOrder)
