@@ -7,18 +7,16 @@ import { UserContext } from '../../Context/UserContext';
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
 import { encode } from 'base-64';
 import { ServiceContext } from "../../Context/ServiceContext";
-import { CommentContext } from '../../Context/CommentContext';
 import { OrderContext } from '../../Context/OrderContext';
 
 export const CalculateCostButton = ({navigation}) => {
   const [ tariffData, setTariffData ] = useState([]);
-  const { user } = useContext(UserContext); 
-  const { startLocation, endLocation } = useContext(GeoAdressContext); 
-  const { service } = useContext(ServiceContext);
   const [ selectedTariff, setSelectedTariff ] = useState(null);
-  const { comment } = useContext(CommentContext);
-  const { userData, auth, setAuth, request, setRequest } = useContext(OrderContext)
-
+  const { setAuth, setRequest } = useContext(OrderContext)
+  const { startLocation, endLocation } = useContext(GeoAdressContext); 
+  const { service, comment, payment } = useContext(ServiceContext);
+  const { user } = useContext(UserContext); 
+  
   const handleCalculateCost = async () => {
     const credentials = `${user.phone}:${user.hashedPassword}`;
     const base64Credentials = encode(credentials);
@@ -26,7 +24,7 @@ export const CalculateCostButton = ({navigation}) => {
     const requestData = {
       reservation: false,
       comment: comment,
-      payment_type: null,
+      payment_type: payment,
       calculated_tariff_names: [
         "Базовый",
         "Универсал",
@@ -54,17 +52,39 @@ export const CalculateCostButton = ({navigation}) => {
           'X-API-VERSION': '1.52.1' 
         }
       });
-    
+      
       const responseData = response.data;
       console.log(response.data); 
       setTariffData(responseData);     
       if(selectedTariff === null){
         setSelectedTariff(responseData[0]);
       }    
+      
       if (selectedTariff) {
         const updatedSelectedTariff = responseData.find(tariff => tariff.flexible_tariff_name === selectedTariff.flexible_tariff_name);
         setSelectedTariff(updatedSelectedTariff);
       }  
+      const auth = {
+        authCode: `Basic ${base64Credentials}`,
+        version: '1.52.1', 
+      }
+      setAuth(auth)
+      console.log(auth)
+
+      const requestToOrder = {
+        comm: comment,
+        pay: payment,
+        tariff: selectedTariff.flexible_tariff_name,
+        taxiCol: 0,
+        serviceAdd: service,
+        road: [
+          {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
+          {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
+        ]
+      }
+
+      console.log(requestToOrder)
+      console.log(`--------`)
     } catch (error) {
       if (error.response.status === 401) {
         console.error('Error calculating cost: Unauthorized');
@@ -79,7 +99,7 @@ export const CalculateCostButton = ({navigation}) => {
     if (startLocation && endLocation) {
       handleCalculateCost();
     }
-  }, [startLocation, endLocation, service, comment]);
+  }, [startLocation, endLocation, service, comment, payment]);
 
   return (
     <View style={styles.container}>     
@@ -96,6 +116,7 @@ export const CalculateCostButton = ({navigation}) => {
       }
       <Button title="ServicesSelection" onPress={() => navigation.navigate('ServicesSelection')} />
       <Button title="Comment" onPress={() => navigation.navigate('Comment')} />
+      <Button title="Select Payment" onPress={() => navigation.navigate('PaymentSelection')} />
     </View>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { CommentContext } from '../../Context/CommentContext';
+import { ServiceContext } from '../../Context/ServiceContext';
 import { View, TextInput, Button } from 'react-native';
 
 export const Comment = ({ navigation }) => {
-  const { comment, setComment } = useContext(CommentContext);
-  const [draftComment, setDraftComment] = useState(comment);
+  const { comment, setComment } = useContext(ServiceContext);
+  const [ draftComment, setDraftComment ] = useState(comment);
 
   const commentChange = (text) => {
     setDraftComment(text); 

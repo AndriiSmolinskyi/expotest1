@@ -1,4 +1,3 @@
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar, Text } from 'react-native';
@@ -6,7 +5,6 @@ import { UserProvider } from './components/Context/UserContext';
 import { GeoProvider } from './components/Context/GeoContext';
 import { GeoAdressProvider } from './components/Context/GeoAdressContext';
 import { ServiceProvider } from './components/Context/ServiceContext';
-import { CommentProvider } from './components/Context/CommentContext';
 import { OrderProvider } from './components/Context/OrderContext';
 import Start from './components/Start';
 import Home from './components/Home/Home';
@@ -20,6 +18,7 @@ import VisicomSearchWithSuggestions from './components/Home/Suggestion/VisicomSe
 import CalculateCostButton from './components/Home/Cost/CalculateCostButton';
 import ServicesSelection from './components/Home/Cost/ServicesSelection';
 import Comment from './components/Home/Cost/Comment';
+import PaymentSelection from './components/Home/Cost/PaymentSelection';
 
 const Stack = createStackNavigator();
 
@@ -31,7 +30,6 @@ const App = () => {
         <GeoAdressProvider>    
           <GeoProvider>
             <ServiceProvider>
-              <CommentProvider>
                 <OrderProvider>
                   <StatusBar />
                   <Stack.Navigator
@@ -51,9 +49,9 @@ const App = () => {
                     <Stack.Screen name="CalculateCostButton" component={CalculateCostButton} />
                     <Stack.Screen name="ServicesSelection" component={ServicesSelection} />
                     <Stack.Screen name="Comment" component={Comment} />
+                    <Stack.Screen name="PaymentSelection" component={PaymentSelection} />
                   </Stack.Navigator>
                 </OrderProvider>
-              </CommentProvider>
             </ServiceProvider>
           </GeoProvider>
         </GeoAdressProvider>
