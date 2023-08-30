@@ -16,3 +16,18 @@ const OrderProvider = ({ children }) => {
 };
 
 export { OrderContext, OrderProvider };
+
+
+      // const requestToOrder = {
+      //   tariff: tarOr,
+      //   comm: comment,
+      //   pay: payment,
+      //   taxiCol: 0,
+      //   serviceAdd: service,   
+      //   road: [
+      //     {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
+      //     {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
+      //   ]
+      // }
+
+      // setRequest(requestToOrder)

@@ -5,10 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LiveSearchComponent from './Map/LiveSearchComponent';
 import CalculateCostButton from './Cost/CalculateCostButton';
 import { GeoAdressContext } from '../Context/GeoAdressContext';
+import { OrderContext } from '../Context/OrderContext';
+import { Order } from './Order/Order';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const { startLocation, endLocation } = useContext(GeoAdressContext); 
+  const { request, auth } = useContext(OrderContext)
 
   const handleLogout = async () => {  
     try {
@@ -23,6 +26,8 @@ export const Home = ({ navigation }) => {
     }
   };
 
+  
+
   return (
     <View style={styles.container}>
       <Text>Welcome to Home Page!</Text>
@@ -34,7 +39,7 @@ export const Home = ({ navigation }) => {
         ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
         : (<Text></Text>)
       }
-         
+      {auth && request ? (<Order></Order>) : (<Text></Text>)}
     </View>
   );
 };

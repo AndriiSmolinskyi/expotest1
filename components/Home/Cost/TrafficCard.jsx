@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 export const TrafficCard = ({ tariffData, selectedTariff, setSelectedTariff }) => {
@@ -6,22 +5,20 @@ export const TrafficCard = ({ tariffData, selectedTariff, setSelectedTariff }) =
 
   const selectTariff = () =>{
     setSelectedTariff(tariffData)
-    console.log(selectedTariff)
   }
 
   return (
     <View style={styles.card}>
       <TouchableOpacity onPress={selectTariff}>
-      <Text style={styles.tariffName}>{flexible_tariff_name}</Text>
-      {order_cost_details ? (
-        <>
-          <Text>{order_cost_details.order_cost}{order_cost_details.currency}</Text>
-        </>
-      ) : (
-        <Text>No data available</Text>
-      )}
-    </TouchableOpacity>
-      
+        <Text style={styles.tariffName}>{flexible_tariff_name}</Text>
+        {order_cost_details ? (
+          <>
+            <Text>{order_cost_details.order_cost}{order_cost_details.currency}</Text>
+          </>
+        ) : (
+          <Text>No data available</Text>
+        )}
+      </TouchableOpacity>      
     </View>
   );
 };

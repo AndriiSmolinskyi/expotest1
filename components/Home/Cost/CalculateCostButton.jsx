@@ -12,7 +12,7 @@ import { OrderContext } from '../../Context/OrderContext';
 export const CalculateCostButton = ({navigation}) => {
   const [ tariffData, setTariffData ] = useState([]);
   const [ selectedTariff, setSelectedTariff ] = useState(null);
-  const { setAuth, setRequest } = useContext(OrderContext)
+  const { setAuth, setRequest, auth } = useContext(OrderContext)
   const { startLocation, endLocation } = useContext(GeoAdressContext); 
   const { service, comment, payment } = useContext(ServiceContext);
   const { user } = useContext(UserContext); 
@@ -40,8 +40,6 @@ export const CalculateCostButton = ({navigation}) => {
         {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
       ]
     };
-    console.log(requestData)
-    console.log('-------------------------')
 
     try {
       const response = await axios.post(`${ServerApi}weborders/tariffs/cost`, requestData, {
@@ -54,8 +52,8 @@ export const CalculateCostButton = ({navigation}) => {
       });
       
       const responseData = response.data;
-      console.log(response.data); 
-      setTariffData(responseData);     
+      setTariffData(responseData); 
+
       if(selectedTariff === null){
         setSelectedTariff(responseData[0]);
       }    
@@ -64,27 +62,13 @@ export const CalculateCostButton = ({navigation}) => {
         const updatedSelectedTariff = responseData.find(tariff => tariff.flexible_tariff_name === selectedTariff.flexible_tariff_name);
         setSelectedTariff(updatedSelectedTariff);
       }  
+
       const auth = {
         authCode: `Basic ${base64Credentials}`,
         version: '1.52.1', 
       }
       setAuth(auth)
-      console.log(auth)
 
-      const requestToOrder = {
-        comm: comment,
-        pay: payment,
-        tariff: selectedTariff.flexible_tariff_name,
-        taxiCol: 0,
-        serviceAdd: service,
-        road: [
-          {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
-          {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
-        ]
-      }
-
-      console.log(requestToOrder)
-      console.log(`--------`)
     } catch (error) {
       if (error.response.status === 401) {
         console.error('Error calculating cost: Unauthorized');
@@ -94,12 +78,28 @@ export const CalculateCostButton = ({navigation}) => {
     }
   };
 
-
   useEffect(() => {
     if (startLocation && endLocation) {
       handleCalculateCost();
     }
   }, [startLocation, endLocation, service, comment, payment]);
+
+  const saveToOrder = () =>{
+    const requestToOrder = {
+      tariff: selectedTariff.flexible_tariff_name,
+      comm: comment,
+      pay: payment,
+      taxiCol: 0,
+      serviceAdd: service,   
+      road: [
+        {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},
+        {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
+      ]
+    }
+    console.log(requestToOrder)
+    setRequest(requestToOrder)
+    console.log(auth)
+  }
 
   return (
     <View style={styles.container}>     
@@ -107,7 +107,8 @@ export const CalculateCostButton = ({navigation}) => {
         {tariffData.map((tariff, index) => (
           <TrafficCard key={index} tariffData={tariff}             
           selectedTariff={selectedTariff} 
-          setSelectedTariff={setSelectedTariff} />            
+          setSelectedTariff={setSelectedTariff} 
+          />            
         ))}
       </View>    
       {selectedTariff 
@@ -117,6 +118,7 @@ export const CalculateCostButton = ({navigation}) => {
       <Button title="ServicesSelection" onPress={() => navigation.navigate('ServicesSelection')} />
       <Button title="Comment" onPress={() => navigation.navigate('Comment')} />
       <Button title="Select Payment" onPress={() => navigation.navigate('PaymentSelection')} />
+      <Button title="Save" onPress={saveToOrder} />
     </View>
   );
 };
