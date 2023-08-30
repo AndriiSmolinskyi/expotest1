@@ -2,7 +2,6 @@ import { OrderContext } from "../../Context/OrderContext";
 import { useContext } from "react";
 import { View, Text, Button } from "react-native";
 import { ServerApi } from "../../../ServerApi";
-import { UserContext } from '../../Context/UserContext'; 
 import axios from "axios";
 
 export const Order = () =>{
