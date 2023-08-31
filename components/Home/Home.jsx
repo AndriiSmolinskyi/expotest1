@@ -41,13 +41,12 @@ export const Home = ({ navigation }) => {
       <Text>Welcome to Home Page!</Text>
       <Text>Phone: {user ? user.phone : ''}</Text>
       <Button title="Logout" onPress={handleLogout} />    
-      <LiveSearchComponent></LiveSearchComponent>
-      <Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />
+      <LiveSearchComponent></LiveSearchComponent>     
       {startLocation && endLocation 
         ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
         : (<Text></Text>)
       }
-      {auth && request ? (<Order></Order>) : (<Text></Text>)}
+      {auth && request ? (<Order></Order>) : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)}
     </View>
   );
 };

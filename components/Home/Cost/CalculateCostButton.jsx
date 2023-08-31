@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { TrafficCard } from './TrafficCard'; 
 import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
-import { UserContext } from '../../Context/UserContext'; 
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
 import { ServiceContext } from "../../Context/ServiceContext";
 import { OrderContext } from '../../Context/OrderContext';
@@ -13,7 +12,7 @@ export const CalculateCostButton = ({navigation}) => {
   const [ selectedTariff, setSelectedTariff ] = useState(null);
   const { setRequest, auth } = useContext(OrderContext)
   const { startLocation, endLocation, clearGeoData } = useContext(GeoAdressContext); 
-  const { service, comment, payment } = useContext(ServiceContext);
+  const { service, comment, payment, clearServiceData } = useContext(ServiceContext);
 
   const handleCalculateCost = async () => {
 
@@ -89,6 +88,7 @@ export const CalculateCostButton = ({navigation}) => {
     }
     setRequest(requestToOrder);
     clearGeoData()
+    clearServiceData()
   }
 
   return (
