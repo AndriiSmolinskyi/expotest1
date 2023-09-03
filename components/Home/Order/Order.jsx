@@ -5,7 +5,7 @@ import { ServerApi } from "../../../ServerApi";
 import axios from "axios";
 
 export const Order = () =>{
-    const {userData, setUserData, auth, setAuth, request, setRequest, uid, setUid} = useContext(OrderContext)
+    const {userData, auth,  request, setRequest, uid, setUid} = useContext(OrderContext)
     
     const requestData = {
         user_full_name: userData.user_full_name,
