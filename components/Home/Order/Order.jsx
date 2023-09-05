@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { View, Text, Button } from "react-native";
 import { ServerApi } from "../../../ServerApi";
 import axios from "axios";
-import { DeleteOrder } from "./DeleteOrder";
 import { StatusOrder } from "./StatusOrder";
 
 export const Order = () =>{
@@ -44,42 +43,16 @@ export const Order = () =>{
         }
     }
 
-    const statusOrder = async () => {
-        try {
-            const response = await axios.get(`${ServerApi}/weborders/${uid}`, {
-                headers:{
-                    'Accept': 'application/json',
-                    'Authorization': auth
-                }
-            })
-
-            const responseData = response.data;
-            setStatus(responseData)
-            console.log(responseData)
-        } catch (error){
-            if (error.response.status === 401) {
-                console.error('Error calculating cost: Unauthorized');
-            } else {
-                console.error(error);
-            }
-        }
-    }
-
     useEffect(() => {
         if(!uid){
             makeOrder();
         }    
     }, []);
 
-    useEffect(() => {
-        if(uid){
-            statusOrder()
-        }       
-    }, [uid]);
     
     return(
         <View>
-            <DeleteOrder></DeleteOrder>
+            <StatusOrder></StatusOrder> 
         </View>    
     )
 }
