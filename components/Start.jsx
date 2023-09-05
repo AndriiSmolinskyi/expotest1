@@ -20,8 +20,6 @@ const Start = ({ navigation }) => {
       const userStr = await AsyncStorage.getItem('user');
       if (userStr) {
         const user = JSON.parse(userStr);
-        console.log('User data from AsyncStorage:', user);
-
         const requestData = {
           login: user.phone,
           password: user.hashedPassword, // Вже захешований пароль

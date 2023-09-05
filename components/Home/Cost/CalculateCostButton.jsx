@@ -15,8 +15,7 @@ export const CalculateCostButton = ({navigation}) => {
   const { service, comment, payment, clearServiceData } = useContext(ServiceContext);
 
   const handleCalculateCost = async () => {
-
-
+    
     const requestData = {
       reservation: false,
       comment: comment,
