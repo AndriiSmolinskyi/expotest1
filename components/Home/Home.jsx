@@ -46,7 +46,7 @@ export const Home = ({ navigation }) => {
         ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
         : (<Text></Text>)
       }
-      {auth && request ? (<Order></Order>) : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)}
+      {request ? (<Order></Order>) : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)}
     </View>
   );
 };

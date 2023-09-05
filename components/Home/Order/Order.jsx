@@ -43,7 +43,9 @@ export const Order = () =>{
     }
 
     useEffect(() => {
-        makeOrder();
+        if(!uid){
+            makeOrder();
+        }    
     }, []);
 
     useEffect(() => {
