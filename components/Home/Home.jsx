@@ -13,7 +13,7 @@ import { ServiceContext } from '../Context/ServiceContext';
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const { startLocation, endLocation, clearGeoData } = useContext(GeoAdressContext); 
-  const { request, auth, clearOrderData } = useContext(OrderContext);
+  const { request, auth, clearOrderData, uid } = useContext(OrderContext);
   const { clearGeoCoords } = useContext(GeoContext);
   const { clearServiceData } = useContext(ServiceContext)
   
@@ -46,7 +46,7 @@ export const Home = ({ navigation }) => {
         ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
         : (<Text></Text>)
       }
-      {auth && request ? (<Order></Order>) : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)}
+      {auth && uid ? (<Order></Order>) : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)}
     </View>
   );
 };

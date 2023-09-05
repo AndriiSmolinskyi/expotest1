@@ -10,7 +10,7 @@ import { OrderContext } from '../../Context/OrderContext';
 export const CalculateCostButton = ({navigation}) => {
   const [ tariffData, setTariffData ] = useState([]);
   const [ selectedTariff, setSelectedTariff ] = useState(null);
-  const { setRequest, auth } = useContext(OrderContext)
+  const { userData, auth,  request, setRequest, uid, setUid } = useContext(OrderContext)
   const { startLocation, endLocation, clearGeoData } = useContext(GeoAdressContext); 
   const { service, comment, payment, clearServiceData } = useContext(ServiceContext);
 
@@ -74,7 +74,7 @@ export const CalculateCostButton = ({navigation}) => {
     }
   }, [startLocation, endLocation, service, comment, payment]);
 
-  const saveToOrder = () =>{
+  const saveToOrder = async() =>{
     const requestToOrder = {
       tariff: selectedTariff.flexible_tariff_name,
       comm: comment,
@@ -87,9 +87,41 @@ export const CalculateCostButton = ({navigation}) => {
       ]
     }
     setRequest(requestToOrder);
+    const requestData = {
+      user_full_name: userData.user_full_name,
+      user_phone: userData.user_phone,
+      comment: request.comm,
+      flexible_tariff_name : request.tariff,
+      extra_charge_codes: request.serviceAdd,
+      route: request.road,
+      payment_type: request.pay,
+      taxiColumnId: request.taxiCol
+    }
+   
+    try {
+      const response = await axios.post(`${ServerApi}/weborders`,requestData, {
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
+          'Authorization': auth,
+          'X-API-VERSION': '1.52.1'
+          }
+        })
+
+        const responseData = response.data;
+        const orderId = response.data.dispatching_order_uid
+        setUid(orderId)
+        console.log(orderId)
+      } catch (error){
+        if (error.response.status === 401) {
+          console.error('Error calculating cost: Unauthorized');
+        } else {
+           console.error(error.response.data.message);
+      }
+    }
     clearGeoData()
     clearServiceData()
-  }
+}
 
   return (
     <View style={styles.container}>     
