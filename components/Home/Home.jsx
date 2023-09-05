@@ -35,12 +35,11 @@ export const Home = ({ navigation }) => {
   };
 
   
-
   return (
     <View style={styles.container}>
-      <Text>Welcome to Home Page!</Text>
+      {/* <Text>Welcome to Home Page!</Text>
       <Text>Phone: {user ? user.phone : ''}</Text>
-      <Button title="Logout" onPress={handleLogout} />    
+      <Button title="Logout" onPress={handleLogout} />     */}
       <LiveSearchComponent></LiveSearchComponent>     
       {startLocation && endLocation 
         ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 

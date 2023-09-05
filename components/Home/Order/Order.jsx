@@ -42,8 +42,6 @@ export const Order = () =>{
         }
     }
 
-
-
     const statusOrder = async () => {
         try {
             const response = await axios.get(`${ServerApi}/weborders/${uid}`, {
@@ -64,9 +62,27 @@ export const Order = () =>{
         }
     }
 
-    const deleteOrder = () => {
+    const deleteOrder = async () => {
+        try {
+            const response = await axios.put(`${ServerApi}/weborders/cancel/${uid}`, null, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': auth
+                }
+            });
+    
+            const responseData = response.data;
+            console.log(responseData);
+            
+        } catch (error) {
+            if (error.response.status === 401) {
+                console.error('Unauthorized');
+            } else {
+                console.error(error);
+            }
+        }  
         setRequest(null)
-        setUid(null)
+        setUid(null)   
     }
 
     useEffect(() => {
@@ -84,6 +100,7 @@ export const Order = () =>{
     return(
         <View>
             <Button title="deleteOrder" onPress={deleteOrder}/>
+            <Button title="statusOrder" onPress={statusOrder}/>
         </View>    
     )
 }

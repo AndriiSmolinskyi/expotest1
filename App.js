@@ -33,9 +33,9 @@ const App = () => {
                 <OrderProvider>
                   <StatusBar />
                   <Stack.Navigator
-                    // screenOptions={{
-                    //   headerShown: false, // Приховати заголовок та стрілку "назад"
-                    // }}
+                    screenOptions={{
+                      headerShown: false, // Приховати заголовок та стрілку "назад"
+                    }}
                   >
                     <Stack.Screen name="Start" component={Start} />
                     <Stack.Screen name="RegisterPhone" component={RegisterPhoneScreen} />
