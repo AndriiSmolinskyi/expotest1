@@ -1,11 +1,13 @@
 import { OrderContext } from "../../Context/OrderContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, Text, Button } from "react-native";
 import { ServerApi } from "../../../ServerApi";
 import axios from "axios";
+import { DeleteOrder } from "./DeleteOrder";
+import { StatusOrder } from "./StatusOrder";
 
 export const Order = () =>{
-    const {userData, auth,  request, setRequest, uid, setUid} = useContext(OrderContext)
+    const {userData, auth,  request, setRequest, uid, setUid, status, setStatus} = useContext(OrderContext)
     
     const requestData = {
         user_full_name: userData.user_full_name,
@@ -52,6 +54,7 @@ export const Order = () =>{
             })
 
             const responseData = response.data;
+            setStatus(responseData)
             console.log(responseData)
         } catch (error){
             if (error.response.status === 401) {
@@ -60,29 +63,6 @@ export const Order = () =>{
                 console.error(error);
             }
         }
-    }
-
-    const deleteOrder = async () => {
-        try {
-            const response = await axios.put(`${ServerApi}/weborders/cancel/${uid}`, null, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': auth
-                }
-            });
-    
-            const responseData = response.data;
-            console.log(responseData);
-            
-        } catch (error) {
-            if (error.response.status === 401) {
-                console.error('Unauthorized');
-            } else {
-                console.error(error);
-            }
-        }  
-        setRequest(null)
-        setUid(null)   
     }
 
     useEffect(() => {
@@ -99,8 +79,7 @@ export const Order = () =>{
     
     return(
         <View>
-            <Button title="deleteOrder" onPress={deleteOrder}/>
-            <Button title="statusOrder" onPress={statusOrder}/>
+            <DeleteOrder></DeleteOrder>
         </View>    
     )
 }

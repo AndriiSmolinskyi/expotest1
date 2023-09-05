@@ -7,6 +7,7 @@ const OrderProvider = ({ children }) => {
     const [ auth, setAuth ] = useState(null);
     const [ request, setRequest ] = useState(null);
     const [ uid, setUid ] = useState(null);
+    const [ status, setStatus ] = useState(null)
 
     const clearOrderData = () => {
         setUserData(null);
@@ -16,7 +17,7 @@ const OrderProvider = ({ children }) => {
       };
 
     return (
-        <OrderContext.Provider value={{ userData, setUserData, auth, setAuth, request, setRequest, uid, setUid, clearOrderData }}>
+        <OrderContext.Provider value={{ userData, setUserData, auth, setAuth, request, setRequest, uid, setUid, clearOrderData, status, setStatus }}>
         {children}
         </OrderContext.Provider>
     );
