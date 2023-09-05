@@ -1,5 +1,5 @@
 import { OrderContext } from "../../Context/OrderContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { View, Text, Button } from "react-native";
 import { ServerApi } from "../../../ServerApi";
 import axios from "axios";
@@ -42,6 +42,14 @@ export const Order = () =>{
         }
     }
 
+    useEffect(() => {
+        makeOrder();
+    }, []);
+
+    useEffect(() => {
+        statusOrder()
+    }, [uid]);
+
     const statusOrder = async () => {
         try {
             const response = await axios.get(`${ServerApi}/weborders/${uid}`, {
@@ -69,8 +77,6 @@ export const Order = () =>{
 
     return(
         <View>
-            <Text>hy</Text>
-            <Button title="Make Order" onPress={makeOrder}/>
             <Button title="uid" onPress={statusOrder}/>
             <Button title="deleteOrder" onPress={deleteOrder}/>
         </View>    
