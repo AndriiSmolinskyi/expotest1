@@ -42,15 +42,7 @@ export const Order = () =>{
         }
     }
 
-    useEffect(() => {
-        if(!uid){
-            makeOrder();
-        }    
-    }, []);
 
-    useEffect(() => {
-        statusOrder()
-    }, [uid]);
 
     const statusOrder = async () => {
         try {
@@ -77,9 +69,20 @@ export const Order = () =>{
         setUid(null)
     }
 
+    useEffect(() => {
+        if(!uid){
+            makeOrder();
+        }    
+    }, []);
+
+    useEffect(() => {
+        if(uid){
+            statusOrder()
+        }       
+    }, [uid]);
+    
     return(
         <View>
-            <Button title="uid" onPress={statusOrder}/>
             <Button title="deleteOrder" onPress={deleteOrder}/>
         </View>    
     )
