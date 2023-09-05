@@ -64,6 +64,7 @@ export const Order = () =>{
 
     const deleteOrder = () => {
         setRequest(null)
+        setUid(null)
     }
 
     return(
