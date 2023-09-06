@@ -10,6 +10,7 @@ const Sidebar = ({toggleVisibility}) => {
     const { auth, userData } = useContext(OrderContext)
     const executionStatus = 'SearchesForCar'
     const toggleHistory = async () => {
+        console.log(userData)
         try {
             const response = await axios.get(`${ServerApi}clients/ordershistory`, {
                 headers: {
@@ -32,7 +33,7 @@ const Sidebar = ({toggleVisibility}) => {
     return(
         <View style={styles.sideCont}>        
             <View style={styles.side}>
-                <Text>{userData.phone}</Text>
+                <Text>{userData.user_phone}</Text>
                 <Button title="Close" onPress={toggleVisibility}/>
                 <Button title="toggleHistory" onPress={toggleHistory}/>
             </View>
