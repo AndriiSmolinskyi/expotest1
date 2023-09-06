@@ -6,7 +6,7 @@ import { OrderContext } from "../../Context/OrderContext";
 import { DeleteOrder } from "./DeleteOrder";
 
 export const StatusOrder = () => {
-    const { status, setStatus, uid, auth, request } = useContext(OrderContext)
+    const { status, setStatus, uid, auth, setRequest, setUid } = useContext(OrderContext)
 
     const statusingOrder = async () => {
         try {
@@ -20,6 +20,11 @@ export const StatusOrder = () => {
             const responseData = response.data;
             setStatus(responseData)
             console.log(responseData)
+            // if (responseData.execution_status === "SearchesForCar") {
+            //     setTimeout(statusingOrder, 4000); // Викликати кожні 3 секунди
+            // } else if (responseData.execution_status === "CarFound" || responseData.execution_status === "Running") {
+            //     setTimeout(statusingOrder, 30000); // Викликати кожні 30 секунд
+            // }
         } catch (error){
             if (error.response.status === 401) {
                 console.error('Error calculating cost: Unauthorized');
@@ -35,12 +40,63 @@ export const StatusOrder = () => {
         }       
     }, [uid]);
 
-    return status ? (
-        <View>
-            <Text>{status.dispatching_order_uid}</Text>
-            <DeleteOrder></DeleteOrder>
-        </View>    
-    ) : (
-        <View><Text>Завантаження</Text></View>    
-    )
-} 
+    const closeOrder = () => {
+        setRequest(null)
+        setUid(null)   
+        setStatus(null)
+    }
+
+    if(status){
+        if(status.execution_status === "SearchesForCar"){
+            return(
+                <View>
+                    <Text>Пошук машини</Text>
+                </View>    
+            )
+        } 
+        
+        else if(status.execution_status === "CarFound"){
+            return(
+                <View>
+                    <Text>Машина прямує до вас</Text>
+                    <Text>Order Cost: {status.order_cost}</Text>
+                    <Text>Driver Phone: {status.driver_phone}</Text>
+                    <DeleteOrder></DeleteOrder>
+                </View>    
+            )
+        } 
+
+        else if(status.execution_status === "Running"){
+            return(
+                <View>
+                    <Text>Виконується</Text>
+                    <Text>Order Cost: {status.order_cost}</Text>
+                    <Text>Driver Phone: {status.driver_phone}</Text>
+                    <DeleteOrder></DeleteOrder>
+                </View>    
+            )
+        } 
+        
+        else if(status.execution_status === "Executed"){
+            return(
+                <View>
+                    <Text>Виконано</Text>
+                    <Button title="Закрити" onPress={closeOrder}/>
+                </View>    
+            )
+        } else{
+            return(
+                <View>
+                    <Text>Завантаження</Text>
+                </View>    
+            )
+        }
+
+    } else {
+        return(
+            <View>
+                <Text>Завантаження</Text>
+            </View>    
+        )
+    }
+}
