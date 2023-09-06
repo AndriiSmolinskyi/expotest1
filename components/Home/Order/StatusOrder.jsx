@@ -49,8 +49,14 @@ export const StatusOrder = () => {
     if(status){
         if(status.execution_status === "SearchesForCar"){
             return(
+                // <View>
+                //     <Text>Пошук машини</Text>
+                // </View>    
                 <View>
-                    <Text>Пошук машини</Text>
+                <Text>Виконується</Text>
+                <Text>Order Cost: {status.order_cost}</Text>
+                <Text>Driver Phone: {status.driver_phone}</Text>
+                <DeleteOrder></DeleteOrder>
                 </View>    
             )
         } 
