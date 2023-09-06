@@ -40,21 +40,6 @@ export const Home = ({ navigation }) => {
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
-  
-  // return (
-  //   <View style={styles.container}>
-  //     <LiveSearchComponent></LiveSearchComponent>     
-  //     {startLocation && endLocation 
-  //       ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
-  //       : (<Text>Завантаження</Text>)
-  //     }
-  //     {request ? (<Order></Order>) : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)}
-  //     <TouchableOpacity onPress={toggleVisibility} style={styles.burgerContainer}>
-  //       <Icon name="bars" size={35} color="black" />
-  //     </TouchableOpacity>
-  //     {isVisible && <Sidebar toggleVisibility={toggleVisibility}></Sidebar>}
-  //   </View>
-  // );
 
   return (
   <View style={styles.container}>
