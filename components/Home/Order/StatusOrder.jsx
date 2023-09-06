@@ -6,7 +6,7 @@ import { OrderContext } from "../../Context/OrderContext";
 import { DeleteOrder } from "./DeleteOrder";
 
 export const StatusOrder = () => {
-    const { status, setStatus, uid, auth } = useContext(OrderContext)
+    const { status, setStatus, uid, auth, request } = useContext(OrderContext)
 
     const statusingOrder = async () => {
         try {
@@ -15,7 +15,7 @@ export const StatusOrder = () => {
                     'Accept': 'application/json',
                     'Authorization': auth
                 }
-            })
+              })
 
             const responseData = response.data;
             setStatus(responseData)
