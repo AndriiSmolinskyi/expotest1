@@ -43,15 +43,17 @@ export const Home = ({ navigation }) => {
 
   return (
   <View style={styles.container}>
-    <LiveSearchComponent></LiveSearchComponent>     
-    {startLocation && endLocation 
-      ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
-      : request
-      ? (<Order></Order>)
-      : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)
-    }
+    <LiveSearchComponent></LiveSearchComponent>
+    <View style={styles.homeBlock}>
+        {startLocation && endLocation 
+          ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
+          : request
+          ? (<Order></Order>)
+          : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)
+        }
+    </View>     
     <TouchableOpacity onPress={toggleVisibility} style={styles.burgerContainer}>
-      <Icon name="bars" size={35} color="black" />
+      <Icon name="bars" size={30}  style={styles.burger}/>
     </TouchableOpacity>
     {isVisible && <Sidebar toggleVisibility={toggleVisibility}></Sidebar>}
   </View>
@@ -67,9 +69,25 @@ const styles = StyleSheet.create({
     position: 'absolute'
   }, burgerContainer: {
     position: 'absolute',
-    left: '6%',
-    top: '3%',
-  },
+    left: '5%',
+    top: '2%',
+    width: 40,
+    height: 40,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  }, burger:{
+    color: '#000000'
+  }, homeBlock: {
+    position: 'absolute',
+    bottom: 0,
+    width: '95%',
+    backgroundColor: 'white',
+    paddingTop: 20,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+  }
 });
 
 export default Home;

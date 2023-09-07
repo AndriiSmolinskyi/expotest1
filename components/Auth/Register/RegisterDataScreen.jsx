@@ -7,10 +7,13 @@ import { ServerApi } from '../../../ServerApi';
 import RegistrationForm from './RegistrationForm';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SHA512 from 'crypto-js/sha512';
+import { OrderContext } from '../../Context/OrderContext';
+
 
 export const RegisterDataScreen = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
+  const { setUserData, setAuth } = useContext(OrderContext)
 
   const handleRegister = async (values) => {
    
