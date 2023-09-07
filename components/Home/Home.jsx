@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { UserContext } from '../Context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LiveSearchComponent from './Map/LiveSearchComponent';
@@ -49,7 +49,26 @@ export const Home = ({ navigation }) => {
           ? (<CalculateCostButton navigation={navigation}></CalculateCostButton>) 
           : request
           ? (<Order></Order>)
-          : (<Button title="Маршрут" onPress={() => navigation.navigate('VisicomSearchWithSuggestions')} />)
+          : ( <TouchableOpacity style={styles.road} onPress={() => navigation.navigate('VisicomSearchWithSuggestions')}>
+                <View style={styles.road__block}>
+                  <Icon name="map-pin" size={30} color={'green'} style={styles.road__block__icon}/>
+                  <View style={styles.road__block__item}>
+                    <Text style={styles.road__block__title}>Звідки поїдемо?</Text>
+                    <Text style={styles.road__block__text}>Ваша поточна локація</Text>
+                  </View>
+                </View>
+
+                <View style={styles.hr} />
+
+                <View style={styles.road__block}>
+                  <Icon name="map-marker" size={30} color={'red'} style={styles.road__block__icon}/>
+                  <View style={styles.road__block__item}>
+                    <Text style={styles.road__block__title}>Куди їдемо?</Text>
+                    <Text style={styles.road__block__text}>Ваша кінцева точка</Text>
+                  </View>                  
+                </View>
+              </TouchableOpacity>
+            )
         }
     </View>     
     <TouchableOpacity onPress={toggleVisibility} style={styles.burgerContainer}>
@@ -77,17 +96,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-  }, burger:{
-    color: '#000000'
   }, homeBlock: {
     position: 'absolute',
     bottom: 0,
     width: '95%',
     backgroundColor: 'white',
     paddingTop: 20,
+    paddingBottom: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
-  }
+  }, 
+  
+  road:{
+  
+  }, road__block:{
+    flexDirection: 'row',
+    alignItems: 'center', 
+  }, road__block__item:{
+    marginLeft: 15,
+    
+  }, road__block__title:{
+    color: '#C8C7CC',
+    fontSize: 16,
+  },  road__block__text:{
+    fontSize: 21,
+    marginTop: 10,
+    marginBottom: 10,
+  },   hr: {
+    borderBottomColor: '#C8C7CC', 
+    borderBottomWidth: 1,       
+    marginVertical: 10,         
+  },
 });
 
 export default Home;

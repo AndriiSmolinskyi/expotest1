@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { SearchWithSuggestions } from './SearchWithSuggestions';
 import { GeoContext } from '../../Context/GeoContext';
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const VisicomSearchWithSuggestions = ({ navigation }) => {
   const [fromSuggestion, setFromSuggestion] = useState({ query: '', data: null });
@@ -28,19 +29,17 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
           params: {
             lang: 'uk',
             text: `м. Київ, ${text}`,
-            limit: 1,
+            limit: 5,
             key: apiKey,
           },
         });
 
         const suggestionData = response.data; 
         setSuggestion((prevSuggestion) => ({ ...prevSuggestion, data: suggestionData }));
-        console.log('Suggestion Data:', suggestionData);
       } catch (error) {
-        console.error('Error fetching suggestions:', error);
         setSuggestion((prevSuggestion) => ({ ...prevSuggestion, data: null }));
       }
-    }, 1000);
+    }, 500);
 
     setTimer(newTimer);
   };
@@ -60,7 +59,10 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={styles.suggestionContainer}>
+      <TouchableOpacity style={styles.close} onPress={() => navigation.navigate('Home')}>
+        <Icon name="times" size={30} color={'black'} style={styles.close__icon}/>
+      </TouchableOpacity>
       <SearchWithSuggestions
         placeholder="Звідки їдемо?"
         suggestion={fromSuggestion}
@@ -77,5 +79,18 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  suggestionContainer:{
+    height: '100%',
+    justifyContent: 'center',
+    padding: 15,
+  },
+  close:{
+    position: 'absolute',
+    left: '5%',
+    top: '2%',
+  }
+})
 
 export default VisicomSearchWithSuggestions;

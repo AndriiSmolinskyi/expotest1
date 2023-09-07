@@ -7,7 +7,6 @@ export const TrafficCard = ({ tariffData, selectedTariff, setSelectedTariff }) =
     setSelectedTariff(tariffData)
   }
 
-
   return (
     <View style={styles.card}>
       <TouchableOpacity onPress={selectTariff}>

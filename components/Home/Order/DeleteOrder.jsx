@@ -3,10 +3,12 @@ import { View, Text, Button } from "react-native";
 import { ServerApi } from "../../../ServerApi";
 import axios from "axios";
 import { OrderContext } from "../../Context/OrderContext";
+import { GeoContext } from "../../Context/GeoContext";
 
 export const DeleteOrder = () =>{
     const {userData, auth,  request, setRequest, uid, setUid, status, setStatus} = useContext(OrderContext)
-    
+    const { clearGeoCoords } = useContext(GeoContext);
+
     const deleteOrder = async () => {
         try {
             const response = await axios.put(`${ServerApi}/weborders/cancel/${uid}`, null, {
@@ -21,6 +23,7 @@ export const DeleteOrder = () =>{
             setRequest(null)
             setUid(null)   
             setStatus(null)
+            clearGeoCoords()
         } catch (error) {
             if (error.response.status === 401) {
                 console.error('Unauthorized');
