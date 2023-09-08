@@ -91,7 +91,7 @@ export const CalculateCostButton = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>     
+    <View style={styles.container}>   
       <View style={styles.trafficContainer}>
         {tariffData.map((tariff, index) => (
           <TrafficCard key={index} tariffData={tariff}             
@@ -100,6 +100,7 @@ export const CalculateCostButton = ({navigation}) => {
           />            
         ))}
       </View>    
+
       {selectedTariff 
         ? (<Text>{selectedTariff.order_cost_details.order_cost}</Text>) 
         : (<Text></Text>)

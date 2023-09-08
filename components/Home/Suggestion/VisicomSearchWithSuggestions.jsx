@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Button, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Button, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import axios from 'axios';
 import { SearchWithSuggestions } from './SearchWithSuggestions';
 import { GeoContext } from '../../Context/GeoContext';
@@ -29,7 +29,7 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
           params: {
             lang: 'uk',
             text: `м. Київ, ${text}`,
-            limit: 5,
+            limit: 1,
             key: apiKey,
           },
         });
@@ -63,19 +63,25 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
       <TouchableOpacity style={styles.close} onPress={() => navigation.navigate('Home')}>
         <Icon name="times" size={30} color={'black'} style={styles.close__icon}/>
       </TouchableOpacity>
-      <SearchWithSuggestions
-        placeholder="Звідки їдемо?"
-        suggestion={fromSuggestion}
-        onSearchChange={(text) => handleSearchChange(text, setFromSuggestion)}
-        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setFromSuggestion, setStartCoords, setStartLocation)}
-      />
-      <SearchWithSuggestions
-        placeholder="Куди їдемо?"
-        suggestion={toSuggestion}
-        onSearchChange={(text) => handleSearchChange(text, setToSuggestion)}
-        onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setToSuggestion, setEndCoords, setEndLocation)}
-      />
-      <Button title="Побудувати маршрут" onPress={() => navigation.navigate('Home')} />
+      <Text style={styles.title}>Маршрут</Text>
+      <View style={styles.searchBlock}>
+        <SearchWithSuggestions
+          placeholder="Звідки їдемо?"
+          suggestion={fromSuggestion}
+          onSearchChange={(text) => handleSearchChange(text, setFromSuggestion)}
+          onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setFromSuggestion, setStartCoords, setStartLocation)}
+        />
+        <SearchWithSuggestions
+          placeholder="Куди їдемо?"
+          suggestion={toSuggestion}
+          onSearchChange={(text) => handleSearchChange(text, setToSuggestion)}
+          onSuggestionChange={(suggestion) => handleSuggestionChange(suggestion, setToSuggestion, setEndCoords, setEndLocation)}
+        />
+        <TouchableOpacity style={styles.suggestionBtn} onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.buttonText}>Побудувати маршрут</Text>
+        </TouchableOpacity>      
+      </View>
+
     </View>
   );
 };
@@ -83,14 +89,33 @@ export const VisicomSearchWithSuggestions = ({ navigation }) => {
 const styles = StyleSheet.create({
   suggestionContainer:{
     height: '100%',
-    justifyContent: 'center',
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingTop: '5%',
   },
   close:{
     position: 'absolute',
     left: '5%',
     top: '2%',
-  }
+    zIndex: 2,
+  }, title: {
+    textAlign: 'center',
+    fontSize: 21,
+    marginBottom: 30,
+  }, searchBlock:{
+    gap: 30,
+  }, 
+  suggestionBtn:{
+    backgroundColor: '#4CE5B1',
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 48,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+  },
 })
 
 export default VisicomSearchWithSuggestions;
