@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, FlatList} from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList, TouchableOpacity } from 'react-native';
 import { TrafficCard } from './TrafficCard'; 
 import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
 import { ServiceContext } from "../../Context/ServiceContext";
 import { OrderContext } from '../../Context/OrderContext';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const CalculateCostButton = ({navigation}) => {
   const [ tariffData, setTariffData ] = useState([]);
@@ -91,7 +92,7 @@ export const CalculateCostButton = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>   
+  <View style={styles.container}>   
     <FlatList
       data={tariffData}
       renderItem={({ item, index }) => (
@@ -107,15 +108,30 @@ export const CalculateCostButton = ({navigation}) => {
       style={styles.swiper}
     />
 
-      {selectedTariff 
-        ? (<Text>{selectedTariff.order_cost_details.order_cost}</Text>) 
-        : (<Text></Text>)
-      }
-      <Button title="ServicesSelection" onPress={() => navigation.navigate('ServicesSelection')} />
-      <Button title="Comment" onPress={() => navigation.navigate('Comment')} />
-      <Button title="Select Payment" onPress={() => navigation.navigate('PaymentSelection')} />
-      <Button title="Save" onPress={saveToOrder} />
+    {/* {selectedTariff 
+      ? (<Text>{selectedTariff.order_cost_details.order_cost} грн.</Text>) 
+      : (<Text></Text>)
+    } */}
+
+    <Text>{selectedTariff.order_cost_details.order_cost} грн.</Text>
+
+    <View style={styles.serviceBtn}>
+      <TouchableOpacity onPress={() => navigation.navigate('ServicesSelection')}>
+        <Icon name="list-ul" size={30} color="black" />
+        <Text>Послуги</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Comment')}>
+        <Icon name="comment" size={30} color="black" />
+        <Text>Коментар</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('PaymentSelection')}>
+        {payment === null || 1 ? (<Icon name="money" size={30} color="black" />) : (<Icon name="credit-card" size={30} color="black" />)}
+        <Text>Оплата</Text>
+      </TouchableOpacity>      
     </View>
+
+    <Button title="Save" onPress={saveToOrder} />
+  </View>
   );
 };
 
@@ -127,7 +143,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: 'monospace',
   },swiper:{
-    gap: 10,
+    
+  }, serviceBtn: {
+    flexDirection: 'row',
   }
 });
 
