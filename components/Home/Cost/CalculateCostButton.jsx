@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList} from 'react-native';
 import { TrafficCard } from './TrafficCard'; 
 import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
@@ -92,14 +92,20 @@ export const CalculateCostButton = ({navigation}) => {
 
   return (
     <View style={styles.container}>   
-      <View style={styles.trafficContainer}>
-        {tariffData.map((tariff, index) => (
-          <TrafficCard key={index} tariffData={tariff}             
-          selectedTariff={selectedTariff} 
-          setSelectedTariff={setSelectedTariff} 
-          />            
-        ))}
-      </View>    
+    <FlatList
+      data={tariffData}
+      renderItem={({ item, index }) => (
+        <TrafficCard
+          tariffData={item}
+          selectedTariff={selectedTariff}
+          setSelectedTariff={setSelectedTariff}
+        />  
+      )}
+      horizontal
+      decelerationRate="fast"
+      showsHorizontalScrollIndicator={false}
+      style={styles.swiper}
+    />
 
       {selectedTariff 
         ? (<Text>{selectedTariff.order_cost_details.order_cost}</Text>) 
@@ -117,15 +123,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
-  trafficContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
   responseText: {
     marginTop: 20,
     fontFamily: 'monospace',
-  },
+  },swiper:{
+    gap: 10,
+  }
 });
 
 export default CalculateCostButton;
