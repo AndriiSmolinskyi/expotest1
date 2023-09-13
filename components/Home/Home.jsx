@@ -41,6 +41,11 @@ export const Home = ({ navigation }) => {
     setIsVisible(!isVisible);
   };
 
+  const deleteCost = () => {
+    clearGeoData();
+    clearGeoCoords();
+  }
+
   return (
   <View style={styles.container}>
     <LiveSearchComponent></LiveSearchComponent>
@@ -74,6 +79,11 @@ export const Home = ({ navigation }) => {
     <TouchableOpacity onPress={toggleVisibility} style={styles.burgerContainer}>
       <Icon name="bars" size={30}  style={styles.burger}/>
     </TouchableOpacity>
+    {startLocation && endLocation  ? (    
+    <TouchableOpacity style={styles.close} onPress={deleteCost}>
+      <Icon name="times" size={30} color={'black'} style={styles.close__icon}/>
+    </TouchableOpacity>
+    ) : (<Text></Text>)}
     {isVisible && <Sidebar toggleVisibility={toggleVisibility}></Sidebar>}
   </View>
   );
@@ -106,7 +116,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 10,
   }, 
-  
   road:{
   
   }, road__block:{
@@ -127,6 +136,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,       
     marginVertical: 10,         
   },
+  close:{
+    position: 'absolute',
+    right: '5%',
+    top: '2%',
+    zIndex: 2,
+  }
 });
 
 export default Home;

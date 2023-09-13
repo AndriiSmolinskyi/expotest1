@@ -6,6 +6,7 @@ import { ServerApi } from '../../../ServerApi';
 import { GeoAdressContext } from '../../Context/GeoAdressContext';
 import { ServiceContext } from "../../Context/ServiceContext";
 import { OrderContext } from '../../Context/OrderContext';
+import { GeoContext } from '../../Context/GeoContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const CalculateCostButton = ({navigation}) => {
@@ -14,6 +15,7 @@ export const CalculateCostButton = ({navigation}) => {
   const { setRequest, auth } = useContext(OrderContext)
   const { startLocation, endLocation, clearGeoData } = useContext(GeoAdressContext); 
   const { service, comment, payment, clearServiceData } = useContext(ServiceContext);
+  const { clearGeoCoords } = useContext(GeoContext);
 
   const handleCalculateCost = async () => {
     
@@ -93,6 +95,7 @@ export const CalculateCostButton = ({navigation}) => {
 
   return (
   <View style={styles.container}>   
+
     <FlatList
       data={tariffData}
       renderItem={({ item, index }) => (
@@ -109,26 +112,30 @@ export const CalculateCostButton = ({navigation}) => {
     />
 
     {selectedTariff 
-      ? (<Text>{selectedTariff.order_cost_details.order_cost} грн.</Text>) 
+      ? (<Text style={styles.price}>{selectedTariff.order_cost_details.order_cost} грн.</Text>) 
       : (<Text></Text>)
     }
 
     <View style={styles.serviceBtn}>
-      <TouchableOpacity onPress={() => navigation.navigate('ServicesSelection')}>
-        <Icon name="list-ul" size={30} color="black" />
-        <Text>Послуги</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('ServicesSelection')} style={styles.serviceBtn__item}>
+        <Icon name="list-ul" size={28} color="#32323b" />
+        <Text style={styles.serviceBtn__item__text}>Послуги</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Comment')}>
-        <Icon name="comment" size={30} color="black" />
-        <Text>Коментар</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Comment')} style={styles.serviceBtn__item}>
+        <Icon name="comment" size={28} color="#32323b" />
+        <Text style={styles.serviceBtn__item__text}>Коментар</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('PaymentSelection')}>
-        {payment === null || 1 ? (<Icon name="money" size={30} color="black" />) : (<Icon name="credit-card" size={30} color="black" />)}
-        <Text>Оплата</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('PaymentSelection')} style={styles.serviceBtn__item}>
+        {payment === null || 1 ? (<Icon name="money" size={28} color="#32323b" />) : (<Icon name="credit-card" size={30} color="#32323b" />)}
+        <Text style={styles.serviceBtn__item__text}>Оплата</Text>
       </TouchableOpacity>      
     </View>
+    
+   
+    <TouchableOpacity style={styles.saveOrder} onPress={saveToOrder}>
+      <Text style={styles.saveOrder__text}>Замовити</Text>
+    </TouchableOpacity>   
 
-    <Button title="Save" onPress={saveToOrder} />
   </View>
   );
 };
@@ -142,13 +149,46 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace',
   },
   swiper:{
-    paddingBottom: 5,
-    paddingTop: 5,
-  }, 
-
+    borderBottomColor: '#C8C7CC', 
+    borderBottomWidth: 1, 
+    paddingBottom: 8, 
+  },  
+  price:{
+    fontSize: 30,
+    alignSelf: 'flex-start',
+    color: '#32323b',
+    paddingVertical: 8,
+    paddingLeft: 5,
+  },
   serviceBtn: {
     flexDirection: 'row',
-  }
+    justifyContent: 'space-between',
+    width: '100%',
+    borderTopColor: '#C8C7CC',
+    borderTopWidth: 1,
+    paddingVertical: 8,
+  },
+  serviceBtn__item:{
+    alignItems: 'center',
+    padding: 5,
+  },
+  serviceBtn__item__text:{
+    color: '#8a8a8b',
+    fontSize: 15,
+    marginTop: 3,
+  },
+  saveOrder:{
+    backgroundColor: '#4CE5B1',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 44,
+    width: '100%',
+  },
+  saveOrder__text:{
+    color: 'white',
+    fontSize: 18,
+  },
 });
 
 export default CalculateCostButton;

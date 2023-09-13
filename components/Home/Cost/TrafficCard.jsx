@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const nameMap = {
   'Базовый': 'Базовий',
@@ -35,7 +35,7 @@ export const TrafficCard = ({ tariffData, selectedTariff, setSelectedTariff }) =
   return (
     <View style={[styles.card, isActive && styles.activeCard]}>
       <TouchableOpacity onPress={selectTariff} style={styles.card__block}>
-        <Icon name={iconName} size={30} color="black" />
+        <Icon name={iconName} size={35} color="#4CE5B1" />
         <Text style={styles.tariffName}>{formattedTariffName}</Text>
         <Text style={styles.tariff__price}>{order_cost_details.order_cost}{order_cost_details.currency}</Text>
       </TouchableOpacity>
@@ -45,7 +45,7 @@ export const TrafficCard = ({ tariffData, selectedTariff, setSelectedTariff }) =
 
 const styles = StyleSheet.create({
   card: {
-    shadowColor: "#000",
+    shadowColor: "#31ac83",
     shadowOffset: {
       width: 0,
       height: 3,
@@ -53,9 +53,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     margin: 5,
+    marginTop: 2,
   },
   activeCard: {
-    elevation: 3, // Додаємо тінь лише для активного елемента
+    elevation: 4, // Додаємо тінь лише для активного елемента
   },
   card__block: {
     justifyContent: 'center',
@@ -64,13 +65,13 @@ const styles = StyleSheet.create({
     height: 100,
   },
   tariffName: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 4,
+    marginBottom: 4,
     color: '#8a8a8b',
-    fontSize: 18,
+    fontSize: 16,
   },
   tariff__price: {
     color: '#C8C7CC',
-    fontSize: 16,
+    fontSize: 14,
   },
 });
