@@ -108,12 +108,10 @@ export const CalculateCostButton = ({navigation}) => {
       style={styles.swiper}
     />
 
-    {/* {selectedTariff 
+    {selectedTariff 
       ? (<Text>{selectedTariff.order_cost_details.order_cost} грн.</Text>) 
       : (<Text></Text>)
-    } */}
-
-    <Text>{selectedTariff.order_cost_details.order_cost} грн.</Text>
+    }
 
     <View style={styles.serviceBtn}>
       <TouchableOpacity onPress={() => navigation.navigate('ServicesSelection')}>
@@ -142,9 +140,13 @@ const styles = StyleSheet.create({
   responseText: {
     marginTop: 20,
     fontFamily: 'monospace',
-  },swiper:{
-    
-  }, serviceBtn: {
+  },
+  swiper:{
+    paddingBottom: 5,
+    paddingTop: 5,
+  }, 
+
+  serviceBtn: {
     flexDirection: 'row',
   }
 });
