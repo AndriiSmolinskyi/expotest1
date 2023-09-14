@@ -93,6 +93,12 @@ export const CalculateCostButton = ({navigation}) => {
     clearServiceData()
   }
 
+  const deleteCost = () => {
+    clearGeoData();
+    clearGeoCoords();
+    clearServiceData();
+  }
+
   return (
   <View style={styles.container}>   
 
@@ -131,10 +137,15 @@ export const CalculateCostButton = ({navigation}) => {
       </TouchableOpacity>      
     </View>
     
-   
+   <View style={styles.btnBlock}>
     <TouchableOpacity style={styles.saveOrder} onPress={saveToOrder}>
       <Text style={styles.saveOrder__text}>Замовити</Text>
-    </TouchableOpacity>   
+    </TouchableOpacity> 
+
+    <TouchableOpacity style={styles.close} onPress={deleteCost}>
+      <Icon name="times" size={30} color={'white'} style={styles.close__icon}/>
+    </TouchableOpacity>  
+   </View>
 
   </View>
   );
@@ -183,12 +194,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 44,
-    width: '100%',
+    width: '85%',
   },
   saveOrder__text:{
     color: 'white',
     fontSize: 18,
   },
+  btnBlock:{
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 44,
+    alignItems: 'center',
+  },
+  close:{
+    backgroundColor: '#4CE5B1',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 44,
+    width: '13%',
+  }
 });
 
 export default CalculateCostButton;

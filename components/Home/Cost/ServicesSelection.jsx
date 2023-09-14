@@ -4,7 +4,7 @@ import { ServiceContext } from "../../Context/ServiceContext";
 
 export const ServicesSelection = ({ navigation }) => {
   const { service, setService } = useContext(ServiceContext);
-  const [ selectedServices, setSelectedServices ] = useState(service);
+  const [selectedServices, setSelectedServices] = useState(service);
 
   const availableServices = [
     "BAGGAGE", "ANIMAL", "CONDIT", "MEET", "COURIER",
@@ -12,8 +12,10 @@ export const ServicesSelection = ({ navigation }) => {
     "CABLE", "FUEL", "WIRES", "SMOKE"
   ];
 
+  const isServiceSelected = (service) => selectedServices.includes(service);
+
   const toggleService = (service) => {
-    if (selectedServices.includes(service)) {
+    if (isServiceSelected(service)) {
       setSelectedServices(selectedServices.filter(item => item !== service));
     } else {
       setSelectedServices([...selectedServices, service]);
@@ -29,13 +31,11 @@ export const ServicesSelection = ({ navigation }) => {
       {availableServices.map(service => (
         <View key={service}>
           <Button
-            title={service}
+            title={isServiceSelected(service) ? `+ ${service}` : service}
             onPress={() => toggleService(service)}
-            color={selectedServices.includes(service) ? "green" : "red"}
           />
         </View>
       ))}
-      <Text>Selected services: {selectedServices.join(", ")}</Text>
       <Button title="Home" onPress={() => navigation.navigate('Home')} />
     </View>
   );
