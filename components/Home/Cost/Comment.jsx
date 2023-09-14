@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ServiceContext } from '../../Context/ServiceContext';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export const Comment = ({ navigation }) => {
   const { comment, setComment } = useContext(ServiceContext);
@@ -16,15 +17,26 @@ export const Comment = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <TextInput
-        type="text"
-        value={draftComment}
-        onChangeText={(text) => commentChange(text)}
-      />
-      <Button title="Save Comment" onPress={saveComment} />
+    <View style={styles.сommentContainer}>
+      
+      <View style={styles.comment}>
+        <Icon name="comment" size={28} color="#32323b" style={styles.comment__icon}/>
+        <TextInput
+          type="text"
+          value={draftComment}
+          onChangeText={(text) => commentChange(text)}
+          placeholder='Уточнення для водія'
+          style={styles.comment__input}
+        />
+      </View>
+
+      <Button title="Save Comment" onPress={saveComment} style={styles.comment__btn}/>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+
+});
 
 export default Comment;

@@ -12,6 +12,22 @@ export const ServicesSelection = ({ navigation }) => {
     "CABLE", "FUEL", "WIRES", "SMOKE"
   ];
 
+  const serviceTranslations = {
+    BAGGAGE: "Додатковий багаж в салон",
+    ANIMAL: "З тваринкою",
+    CONDIT: "Кондиціонер",
+    MEET: "Зустріч з табличкою",
+    COURIER: "Кур'єр",
+    CHECK: "Чек",
+    BABY_SEAT: "Дитяче крісло",
+    NO_SMOKE: "Водій не палить",
+    ENGLISH: "Англомовний водій",
+    CABLE: "Трос",
+    FUEL: "Підвезти бензин",
+    WIRES: "Дроти",
+    SMOKE: "Куріння під час поїздки" 
+  };
+
   const isServiceSelected = (service) => selectedServices.includes(service);
 
   const toggleService = (service) => {
@@ -32,7 +48,7 @@ export const ServicesSelection = ({ navigation }) => {
       <Text style={styles.service__title}>Додаткові послуги</Text>
       {availableServices.map(service => (
         <TouchableOpacity key={service} onPress={() => toggleService(service)} style={styles.service}>
-            <Text style={styles.service__text}>{service}</Text>
+            <Text style={styles.service__text}>{serviceTranslations[service]}</Text>
             {isServiceSelected(service) && (<Text style={styles.service__icon}>✓</Text>) }
         </TouchableOpacity>
       ))}
@@ -62,7 +78,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#C8C7CC', 
     borderBottomWidth: 1, 
     paddingHorizontal: 15,
-    height: 34,
+    height: 40,
     alignItems: 'center'
   },  
   service__text:{
@@ -81,7 +97,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: '80%',
     alignSelf: 'center',
-    marginTop: 15,
+    marginTop: 20,
   },
   service__btn__text:{
     color: 'white',
