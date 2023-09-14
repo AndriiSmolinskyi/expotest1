@@ -15,7 +15,6 @@ export const Order = () =>{
         flexible_tariff_name : request.tariff,
         extra_charge_codes: request.serviceAdd,
         route: request.road,
-        payment_type: request.pay,
         taxiColumnId: request.taxiCol
     }
    

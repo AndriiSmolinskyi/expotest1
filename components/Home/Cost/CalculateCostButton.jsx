@@ -80,7 +80,6 @@ export const CalculateCostButton = ({navigation}) => {
     const requestToOrder = {
       tariff: selectedTariff.flexible_tariff_name,
       comm: comment,
-      pay: payment,
       taxiCol: 0,
       serviceAdd: service,   
       road: [

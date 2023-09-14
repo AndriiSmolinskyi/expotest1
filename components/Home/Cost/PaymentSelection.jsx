@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { ServiceContext } from '../../Context/ServiceContext';
 
 export const PaymentSelection = ({ navigation }) => {
-  const { payment, setPayment } = useContext(ServiceContext);
+  const { payment, setPayment, setService, service } = useContext(ServiceContext);
 
   const handlePaymentSelection = (selectedPayment) => {
     setPayment(selectedPayment); 

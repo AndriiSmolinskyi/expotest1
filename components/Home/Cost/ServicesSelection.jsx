@@ -25,7 +25,7 @@ export const ServicesSelection = ({ navigation }) => {
     CABLE: "Трос",
     FUEL: "Підвезти бензин",
     WIRES: "Дроти",
-    SMOKE: "Куріння під час поїздки" 
+    SMOKE: "Куріння під час поїздки",
   };
 
   const isServiceSelected = (service) => selectedServices.includes(service);
