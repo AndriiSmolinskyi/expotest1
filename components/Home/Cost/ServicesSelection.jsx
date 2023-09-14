@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Button, Text } from "react-native";
+import { View, Button, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { ServiceContext } from "../../Context/ServiceContext";
 
 export const ServicesSelection = ({ navigation }) => {
@@ -27,18 +27,66 @@ export const ServicesSelection = ({ navigation }) => {
   }, [selectedServices]);
 
   return (
-    <View>
+    <View style={styles.serviceContainer}>
+  
+      <Text style={styles.service__title}>Додаткові послуги</Text>
       {availableServices.map(service => (
-        <View key={service}>
-          <Button
-            title={isServiceSelected(service) ? `+ ${service}` : service}
-            onPress={() => toggleService(service)}
-          />
-        </View>
+        <TouchableOpacity key={service} onPress={() => toggleService(service)} style={styles.service}>
+            <Text style={styles.service__text}>{service}</Text>
+            {isServiceSelected(service) && (<Text style={styles.service__icon}>✓</Text>) }
+        </TouchableOpacity>
       ))}
-      <Button title="Home" onPress={() => navigation.navigate('Home')} />
+
+      <TouchableOpacity style={styles.service__btn} onPress={() => navigation.navigate('Home')}>
+        <Text style={styles.service__btn__text}>Готово</Text>
+      </TouchableOpacity> 
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  serviceContainer:{
+    paddingTop: 10,
+  },
+  service__title:{
+    backgroundColor: '#dcdadf',
+    height: 34,
+    textAlignVertical: 'center',
+    paddingLeft: 15,
+    color: '#68686a',
+    fontSize: 16,
+  },
+  service:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomColor: '#C8C7CC', 
+    borderBottomWidth: 1, 
+    paddingHorizontal: 15,
+    height: 34,
+    alignItems: 'center'
+  },  
+  service__text:{
+    color: '#32323b',
+    fontSize: 16,
+  },
+  service__icon:{
+    color: '#32323b',
+    fontSize: 16,
+  },
+  service__btn:{
+    backgroundColor: '#4CE5B1',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+    width: '80%',
+    alignSelf: 'center',
+    marginTop: 15,
+  },
+  service__btn__text:{
+    color: 'white',
+    fontSize: 17,
+  },
+});
 
 export default ServicesSelection;
