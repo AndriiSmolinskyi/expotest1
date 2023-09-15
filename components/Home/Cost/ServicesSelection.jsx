@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Button, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { ServiceContext } from "../../Context/ServiceContext";
 
 export const ServicesSelection = ({ navigation }) => {
