@@ -39,18 +39,18 @@ export const SearchWithSuggestions = ({ placeholder, suggestion, onSearchChange,
 
 const styles = StyleSheet.create({
     input: {
-        backgroundColor: '#d9d9dd',
-        paddingHorizontal: 15,
-        height: 48,
-        borderRadius: 10,
-        fontSize: 18,
+      backgroundColor: '#d9d9dd',
+      paddingHorizontal: 15,
+      height: 48,
+      borderRadius: 10,
+      fontSize: 18,
     },
     sugges: {
-        marginLeft: 15,
-        marginTop: 10,
+      marginLeft: 15,
+      marginTop: 10,
     },
     sugges__name: {
-        fontSize: 18,
+      fontSize: 18,
     }, sugges__adr:{
       fontSize: 16,
       marginTop: 5,
