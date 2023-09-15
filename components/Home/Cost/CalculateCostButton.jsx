@@ -81,6 +81,7 @@ export const CalculateCostButton = ({navigation}) => {
       tariff: selectedTariff.flexible_tariff_name,
       comm: comment,
       taxiCol: 0,
+      pay: payment,
       serviceAdd: service,   
       road: [
         {"name":startLocation.name,"lat":startLocation.lat, "lng":startLocation.lng},

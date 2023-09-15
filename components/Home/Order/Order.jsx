@@ -12,6 +12,7 @@ export const Order = () =>{
         user_full_name: userData.user_full_name,
         user_phone: userData.user_phone,
         comment: request.comm,
+        payment_type: request.pay,
         flexible_tariff_name : request.tariff,
         extra_charge_codes: request.serviceAdd,
         route: request.road,

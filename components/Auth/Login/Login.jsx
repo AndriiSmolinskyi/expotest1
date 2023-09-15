@@ -12,9 +12,14 @@ import { encode } from 'base-64';
 
 const LoginSchema = Yup.object().shape({
   phone: Yup.string()
-    .matches(/^\d{9}$/, 'Номер телефону повинен містити 9 цифр')
+    .matches(/^\d{9}$/, 'Короткий номер або невірний')
     .required('Введіть номер телефону'),
-  password: Yup.string().required('Введіть пароль'),
+  password: Yup.string()
+  .min(7, 'Мінімум 7 символів')
+  .max(20, 'Не більше 20 символів')
+  .matches(/[0-9]/, 'Повинен містити цифру')
+  .matches(/[a-zA-Z]/, 'Повинен містити букву')
+  .required('Введіть пароль'),
 });
 
 export const Login = ({ navigation }) => {
@@ -93,7 +98,10 @@ export const Login = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={values.password}
-              onChangeText={handleChange('password')}
+              onChangeText={(text) => {
+                const sanitizedText = text.replace(/[^0-9A-Za-z!@#$%^&*()_+{}\[\]:;<>,.?~\\/\-]/g, '');
+                handleChange('password')(sanitizedText);
+              }}
               onBlur={handleBlur('password')}
               placeholder="Password"
               secureTextEntry
