@@ -19,23 +19,6 @@ export const Home = ({ navigation }) => {
   const { clearGeoCoords } = useContext(GeoContext);
   const { clearServiceData } = useContext(ServiceContext);
   const [isVisible, setIsVisible] = useState(false);
-  
-  const handleLogout = async () => {  
-    try {
-      await AsyncStorage.removeItem('user');
-      setUser(null)
-      clearGeoData();
-      clearOrderData();
-      clearGeoCoords();
-      clearServiceData();
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Start' }],
-      });
-    } catch (error) {
-      console.error('Error removing user data from AsyncStorage:', error);
-    }
-  };
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);

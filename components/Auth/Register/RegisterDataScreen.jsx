@@ -35,7 +35,6 @@ export const RegisterDataScreen = ({ navigation }) => {
           hashedPassword,
           token: 'App_Token',
         };
-        // setUser(newUser)
         AsyncStorage.setItem('user', JSON.stringify(newUser));
         
         navigation.navigate('Start');
@@ -51,7 +50,7 @@ export const RegisterDataScreen = ({ navigation }) => {
  
   return (
     <View style={styles.container}>
-      <Text>Етап 2: Заповніть дані для реєстрації</Text>
+      <Text style={styles.title}>Дані для реєстрації</Text>
       <RegistrationForm handleRegister={handleRegister} errorMessage={errorMessage} />
     </View>
   );
@@ -62,6 +61,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  title:{
+    fontSize: 24,
   },
 });
 

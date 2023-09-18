@@ -78,9 +78,7 @@ export const Login = ({ navigation }) => {
           } catch (err) {
             console.error(err);
           }
-        }}
-        
-      >
+        }}>
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
           <View style={styles.formik}>
             <Text style={styles.title}>Ввійдіть в акаунт</Text>
@@ -129,7 +127,9 @@ export const Login = ({ navigation }) => {
         )}
       </Formik>
 
-      
+      <TouchableOpacity style={styles.register} onPress={() => navigation.navigate('RegisterPhone')}>
+        <Text style={styles.register__text}>Нема акаунта? Зареєструватись</Text>
+      </TouchableOpacity> 
 
     </View>
   );
@@ -211,7 +211,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'right'
   },
-
+  register:{
+    backgroundColor: '#4CE5B1',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 44,
+    width: '85%',
+    marginTop: 15,
+    marginTop: 30,
+  },
+  register__text:{
+    color: 'white',
+    fontSize: 18,
+  },
 });
 
 export default Login;
