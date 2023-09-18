@@ -8,6 +8,7 @@ import { OrderContext } from './Context/OrderContext';
 import { encode } from 'base-64';
 import Login from './Auth/Login/Login';
 import RegisterPhoneScreen from './Auth/Register/RegisterPhoneScreen';
+
 const Start = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
   const { setUserData, setAuth } = useContext(OrderContext)
@@ -50,21 +51,7 @@ const Start = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.greenBackground}> 
-      </View> */}
-      {/* <Button title="Ввійти в акаунт" onPress={() => navigation.navigate('Login')} />       
-      <Button title="Зареєструватись" onPress={() => navigation.navigate('RegisterPhone')} /> */}
-
-      {/* <View style={styles.btnblock}>
-        <TouchableOpacity style={styles.suggestionBtn} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.buttonText}>Ввійти в акаунт</Text>
-        </TouchableOpacity>      
-        <TouchableOpacity style={styles.suggestionBtn} onPress={() => navigation.navigate('RegisterPhone')}>
-          <Text style={styles.buttonText}>Зареєструватись</Text>
-        </TouchableOpacity>          
-      </View> */}
-
-      <Login></Login>
+      <Login navigation={ navigation }></Login>
     </View>
   );
 };
@@ -72,38 +59,7 @@ const Start = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
   },
-  // greenBackground: {
-  //   position: 'absolute', 
-  //   top: 0, 
-  //   left: 0, 
-  //   width: '100%', 
-  //   height: 200, 
-  //   backgroundColor: '#4CE5B1', 
-  // },
-  // btnblock:{
-  //   height: 300,
-  //   width: '80%',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   rowGap: 30,
-  //   backgroundColor: 'white',
-  //   borderRadius: 20,
-  // },
-  // suggestionBtn:{
-  //   backgroundColor: '#4CE5B1',
-  //   borderRadius: 10,
-  //   paddingVertical: 10,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   height: 48,
-  //   width: '80%',
-  // },
-  // buttonText: {
-  //   color: 'white',
-  //   fontSize: 18,
-  // },
 });
 
 export default Start;

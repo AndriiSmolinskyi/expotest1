@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { UserContext } from '../../Context/UserContext';
 import { ServerApi } from '../../../ServerApi';
@@ -16,7 +16,7 @@ const LoginSchema = Yup.object().shape({
     .required('Введіть номер телефону'),
   password: Yup.string()
   .min(7, 'Мінімум 7 символів')
-  .max(20, 'Не більше 20 символів')
+  .max(22, 'Не більше 22 символів')
   .matches(/[0-9]/, 'Повинен містити цифру')
   .matches(/[a-zA-Z]/, 'Повинен містити букву')
   .required('Введіть пароль'),
@@ -66,7 +66,6 @@ export const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Log in to your account</Text>
       <Formik
         initialValues={{
           phone: '',
@@ -80,9 +79,11 @@ export const Login = ({ navigation }) => {
             console.error(err);
           }
         }}
+        
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
-          <View>
+          <View style={styles.formik}>
+            <Text style={styles.title}>Ввійдіть в акаунт</Text>
             <View style={styles.phoneInputContainer}>
               <Text style={styles.phonePrefix}>+380</Text>
               <TextInput
@@ -94,7 +95,11 @@ export const Login = ({ navigation }) => {
                 maxLength={9}
               />
             </View>
-            {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+
+            <View style={styles.errorBlock}>
+              {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+            </View>
+
             <TextInput
               style={styles.input}
               value={values.password}
@@ -105,13 +110,27 @@ export const Login = ({ navigation }) => {
               onBlur={handleBlur('password')}
               placeholder="Password"
               secureTextEntry
-            />
-            {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-            <Button title="Login" onPress={handleSubmit} disabled={!isValid} />
-            <Button title="RequestCodeScreen" onPress={() => navigation.navigate('RequestCodeScreen')} />
+              maxLength={22}
+            />  
+
+            <View style={styles.errorBlock}>
+              {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+            </View>
+
+            <TouchableOpacity style={styles.forgot} onPress={() => navigation.navigate('RequestCodeScreen')}>
+              <Text style={styles.forgot__text}>Забули пароль?</Text>
+            </TouchableOpacity> 
+
+            <TouchableOpacity style={styles.saveOrder} onPress={handleSubmit} disabled={!isValid}>
+              <Text style={styles.saveOrder__text}>Вхід</Text>
+            </TouchableOpacity> 
+
           </View>
         )}
       </Formik>
+
+      
+
     </View>
   );
 };
@@ -120,36 +139,79 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center'
+  },
+  formik:{
+    borderBottomColor: '#C8C7CC',
+    borderBottomWidth: 1,
+    paddingBottom: 30,
+    width: '100%',
     alignItems: 'center',
   },
   phoneInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: 'gray',
-    padding: 5,
-    marginVertical: 10,
+    marginVertical: 15,
+    backgroundColor: '#d9d9dd',
+    paddingHorizontal: 15,
+    height: 48,
+    borderRadius: 10,
+    fontSize: 18,
+    width: '85%',
   },
   phonePrefix: {
     marginRight: 5,
+    fontSize: 18,
   },
   phoneInput: {
     flex: 1,
-    borderWidth: 0, // Remove border for the inner TextInput
+    borderWidth: 0, 
+    fontSize: 18,
   },
   input: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: 'gray',
-    padding: 5,
-    marginVertical: 10,
-    width: 200,
+    backgroundColor: '#d9d9dd',
+    paddingHorizontal: 15,
+    height: 48,
+    borderRadius: 10,
+    fontSize: 18,
+    width: '85%',
+    marginVertical: 15,
+  },
+  errorBlock:{
+    width: '85%',
+    paddingLeft: 10,
   },
   errorText: {
     color: 'red',
-    marginBottom: 5,
+    textAlign: 'left',
+    fontSize: 16,
   },
+  title:{
+    marginBottom: 15,
+    fontSize: 24,
+  },
+  saveOrder:{
+    backgroundColor: '#4CE5B1',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 44,
+    width: '85%',
+    marginTop: 15,
+  },
+  saveOrder__text:{
+    color: 'white',
+    fontSize: 18,
+  },
+  forgot:{
+    width: '85%'
+  },
+  forgot__text:{
+    color: '#717173',
+    fontSize: 16,
+    textAlign: 'right'
+  },
+
 });
 
 export default Login;
