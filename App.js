@@ -19,6 +19,7 @@ import CalculateCostButton from './components/Home/Cost/CalculateCostButton';
 import ServicesSelection from './components/Home/Cost/ServicesSelection';
 import Comment from './components/Home/Cost/Comment';
 import PaymentSelection from './components/Home/Cost/PaymentSelection';
+import LiqPay from './components/Home/Cost/LiqPay';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ const App = () => {
                     <Stack.Screen name="ServicesSelection" component={ServicesSelection} />
                     <Stack.Screen name="Comment" component={Comment} />
                     <Stack.Screen name="PaymentSelection" component={PaymentSelection} />
+                    <Stack.Screen name="LiqPay" component={LiqPay} />
                   </Stack.Navigator>
                 </OrderProvider>
             </ServiceProvider>

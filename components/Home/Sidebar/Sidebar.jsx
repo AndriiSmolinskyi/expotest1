@@ -66,6 +66,7 @@ const Sidebar = ({toggleVisibility}) => {
                 <Button title="Close" onPress={toggleVisibility}/>
                 <Button title="toggleHistory" onPress={toggleHistory}/>
                 <Button title="Logout" onPress={handleLogout}/>
+                <Button title="LiqPay" onPress={() => navigation.navigate('LiqPay')}/>
             </View>
         </View>    
     )
