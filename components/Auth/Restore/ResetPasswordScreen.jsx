@@ -1,6 +1,6 @@
 
 import React, { useContext } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { UserContext } from '../../Context/UserContext';
 import { ServerApi } from '../../../ServerApi';
@@ -9,8 +9,11 @@ import * as Yup from 'yup';
 
 const ResetPasswordSchema = Yup.object().shape({
   newPassword: Yup.string()
-    .required('Введіть новий пароль')
-    .min(6, 'Мінімум 6 символів'),
+    .min(7, 'Мінімум 7 символів')
+    .max(22, 'Не більше 22 символів')
+    .matches(/[0-9]/, 'Повинен містити цифру')
+    .matches(/[a-zA-Z]/, 'Повинен містити букву')
+    .required('Введіть новий пароль'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('newPassword'), null], 'Паролі повинні співпадати')
     .required('Підтвердіть новий пароль'),
@@ -49,7 +52,7 @@ export const ResetPasswordScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Етап 2: Введіть новий пароль</Text>
+      <Text style={styles.title}>Введіть новий пароль</Text>
       <Formik
         initialValues={{
           newPassword: '',
@@ -65,7 +68,7 @@ export const ResetPasswordScreen = ({ navigation }) => {
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched, isValid }) => (
-          <View>
+          <View style={styles.inputBlock}>
             <TextInput
               style={styles.input}
               value={values.newPassword}
@@ -74,9 +77,12 @@ export const ResetPasswordScreen = ({ navigation }) => {
               placeholder="Новий пароль"
               secureTextEntry
             />
-            {touched.newPassword && errors.newPassword && (
-              <Text style={styles.errorText}>{errors.newPassword}</Text>
-            )}
+            <View style={styles.errorBlock}>
+              {touched.newPassword && errors.newPassword && (
+                <Text style={styles.errorText}>{errors.newPassword}</Text>
+              )}
+            </View>
+            
             <TextInput
               style={styles.input}
               value={values.confirmPassword}
@@ -85,10 +91,14 @@ export const ResetPasswordScreen = ({ navigation }) => {
               placeholder="Повторити новий пароль"
               secureTextEntry
             />
-            {touched.confirmPassword && errors.confirmPassword && (
-              <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-            )}
-            <Button title="Змінити пароль" onPress={handleSubmit} disabled={!isValid} />
+            <View style={styles.errorBlock}>
+              {touched.confirmPassword && errors.confirmPassword && (
+                <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+              )}
+            </View>
+            <TouchableOpacity style={styles.saveOrder} onPress={handleSubmit} disabled={!isValid}>
+              <Text style={styles.saveOrder__text}>Змінити пароль</Text>
+            </TouchableOpacity> 
           </View>
         )}
       </Formik>
@@ -103,16 +113,46 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: 'gray',
-    padding: 5,
-    marginVertical: 10,
-    width: 200,
+    backgroundColor: '#d9d9dd',
+    paddingHorizontal: 15,
+    height: 48,
+    borderRadius: 10,
+    fontSize: 18,
+    width: '85%',
+    marginVertical: 15,
   },
   errorText: {
     color: 'red',
     marginBottom: 5,
+  },
+  saveOrder:{
+    backgroundColor: '#4CE5B1',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 44,
+    width: '85%',
+    marginTop: 15,
+  },
+  saveOrder__text:{
+    color: 'white',
+    fontSize: 18,
+  },
+  errorBlock:{
+    width: '85%',
+    paddingLeft: 10,
+  },
+  errorText: {
+    width: '85%',
+    color: 'red',
+    fontSize: 16,
+  },
+  inputBlock:{
+    width: '100%',
+    alignItems: 'center'
+  },
+  title:{
+    fontSize: 24,   
   },
 });
 

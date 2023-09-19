@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput, StyleSheet, Alert, TouchableOpacity } fr
 import axios from 'axios';
 import { UserContext } from '../../Context/UserContext';
 import { ServerApi } from '../../../ServerApi';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const RequestCodeScreen = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
@@ -34,6 +35,9 @@ export const RequestCodeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.close} onPress={() => navigation.navigate('Start')}>
+        <Icon name="times" size={30} color={'black'} style={styles.close__icon}/>
+      </TouchableOpacity>
       <Text style={styles.title}>Введіть телефонний номер</Text>
       <View style={styles.phoneInputContainer}>
         <Text style={styles.phonePrefix}>+380</Text>
@@ -94,7 +98,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
-  
+  close:{
+    position: 'absolute',
+    left: '5%',
+    top: '2%',
+    zIndex: 2,
+  },
 });
 
 export default RequestCodeScreen;
