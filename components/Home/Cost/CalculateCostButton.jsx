@@ -88,6 +88,7 @@ export const CalculateCostButton = ({navigation}) => {
         {"name":endLocation.name,"lat":endLocation.lat, "lng":endLocation.lng}
       ]
     }
+    console.log(requestToOrder)
     setRequest(requestToOrder);
     clearGeoData()
     clearServiceData()

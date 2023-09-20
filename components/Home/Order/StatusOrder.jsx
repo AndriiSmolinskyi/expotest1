@@ -4,6 +4,7 @@ import { ServerApi } from "../../../ServerApi";
 import axios from "axios";
 import { OrderContext } from "../../Context/OrderContext";
 import { DeleteOrder } from "./DeleteOrder";
+import Loading from "./Loading";
 
 export const StatusOrder = () => {
     const { status, setStatus, uid, auth, setRequest, setUid } = useContext(OrderContext)
@@ -49,15 +50,7 @@ export const StatusOrder = () => {
     if(status){
         if(status.execution_status === "SearchesForCar"){
             return(
-                // <View>
-                //     <Text>Пошук машини</Text>
-                // </View>    
-                <View>
-                <Text>Виконується</Text>
-                <Text>Order Cost: {status.order_cost}</Text>
-                <Text>Driver Phone: {status.driver_phone}</Text>
-                <DeleteOrder></DeleteOrder>
-                </View>    
+                <Loading titlename={"Пошук машини"}></Loading> 
             )
         } 
         
@@ -93,7 +86,7 @@ export const StatusOrder = () => {
         } else{
             return(
                 <View>
-                    <Text>Завантаження</Text>
+                    <Loading titlename={"Завантаження"}></Loading>
                 </View>    
             )
         }

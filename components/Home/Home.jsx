@@ -11,6 +11,7 @@ import { GeoContext } from '../Context/GeoContext';
 import { ServiceContext } from '../Context/ServiceContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Sidebar from './Sidebar/Sidebar';
+import Loading from './Order/Loading';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
