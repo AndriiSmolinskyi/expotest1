@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { ServiceContext } from "../../Context/ServiceContext";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const ServicesSelection = ({ navigation }) => {
   const { service, setService } = useContext(ServiceContext);
@@ -44,7 +45,10 @@ export const ServicesSelection = ({ navigation }) => {
 
   return (
     <View style={styles.serviceContainer}>
-  
+
+      <TouchableOpacity style={styles.close} onPress={() => navigation.navigate('Home')}>
+        <Icon name="times" size={30} color={'black'} style={styles.close__icon}/>
+      </TouchableOpacity>
       <Text style={styles.service__title}>Додаткові послуги</Text>
       {availableServices.map(service => (
         <TouchableOpacity key={service} onPress={() => toggleService(service)} style={styles.service}>
@@ -62,7 +66,7 @@ export const ServicesSelection = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   serviceContainer:{
-    paddingTop: 10,
+    paddingTop: '11%',
   },
   service__title:{
     backgroundColor: '#dcdadf',
@@ -102,6 +106,12 @@ const styles = StyleSheet.create({
   service__btn__text:{
     color: 'white',
     fontSize: 17,
+  },
+  close:{
+    position: 'absolute',
+    left: 15,
+    top: '1%',
+    zIndex: 2,
   },
 });
 
