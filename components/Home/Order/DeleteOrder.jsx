@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text,  TouchableOpacity, StyleSheet } from "react-native";
 import { ServerApi } from "../../../ServerApi";
 import axios from "axios";
 import { OrderContext } from "../../Context/OrderContext";
@@ -31,11 +31,33 @@ export const DeleteOrder = () =>{
                 console.error(error);
             }
         }    
+        setRequest(null)
+            setUid(null)   
+            setStatus(null)
+            clearGeoCoords()
     }
 
     return(
-        <View>
-            <Button title="deleteOrder" onPress={deleteOrder}/>
+        <View style={styles.container}>
+            <TouchableOpacity onPress={deleteOrder} style={styles.delete}>
+                <Text style={styles.delete__text}>Скасувати замовлення</Text>
+            </TouchableOpacity>
         </View>    
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    delete:{
+        
+    },
+    delete__text:{
+        fontSize: 20,
+        color: 'red'
+    },
+});
+
+export default DeleteOrder

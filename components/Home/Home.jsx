@@ -11,7 +11,6 @@ import { GeoContext } from '../Context/GeoContext';
 import { ServiceContext } from '../Context/ServiceContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Sidebar from './Sidebar/Sidebar';
-import Loading from './Order/Loading';
 
 export const Home = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -54,7 +53,10 @@ export const Home = ({ navigation }) => {
               </TouchableOpacity>
             )
         }
-    </View>     
+    </View> 
+
+   
+
     <TouchableOpacity onPress={toggleVisibility} style={styles.burgerContainer}>
       <Icon name="bars" size={30}  style={styles.burger}/>
     </TouchableOpacity>
