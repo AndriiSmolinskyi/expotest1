@@ -29,7 +29,7 @@ const Start = ({ navigation }) => {
 
         const response = await axios.post(`${ServerApi}/account`, requestData);
         const userFromServer = response.data;
-
+        console.log(userFromServer)
         if (response.status === 200) {
           setUser(user);
           setUserData(userFromServer)         

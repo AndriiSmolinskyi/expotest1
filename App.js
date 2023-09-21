@@ -20,6 +20,7 @@ import ServicesSelection from './components/Home/Cost/ServicesSelection';
 import Comment from './components/Home/Cost/Comment';
 import PaymentSelection from './components/Home/Cost/PaymentSelection';
 import  History from './components/Home/Sidebar/History';
+import ChangeProfile from './components/Home/Sidebar/ChangeProfile';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,7 @@ const App = () => {
                     <Stack.Screen name="Comment" component={Comment} />
                     <Stack.Screen name="PaymentSelection" component={PaymentSelection} />
                     <Stack.Screen name="History" component={History} />
+                    <Stack.Screen name="ChangeProfile" component={ChangeProfile} />
                   </Stack.Navigator>
                 </OrderProvider>
             </ServiceProvider>
