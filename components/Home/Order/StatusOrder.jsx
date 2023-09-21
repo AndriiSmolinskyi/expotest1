@@ -25,7 +25,7 @@ export const StatusOrder = () => {
             if (responseData.execution_status === "SearchesForCar") {
                 setTimeout(statusingOrder, 4000); // Викликати кожні 3 секунди
             } else if (responseData.execution_status === "CarFound" || responseData.execution_status === "Running") {
-                setTimeout(statusingOrder, 30000); // Викликати кожні 30 секунд
+                setTimeout(statusingOrder, 20000); // Викликати кожні 30 секунд
             }
         } catch (error){
             if (error.response.status === 401) {

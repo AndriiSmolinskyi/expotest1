@@ -1,12 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Modal, Alert } from 'react-native';
 import { OrderContext } from "../../Context/OrderContext";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { GeoContext } from "../../Context/GeoContext";
+import axios from 'axios';
+import { ServerApi } from '../../../ServerApi';
 
 export const Executed = () => {
-    const { uid, auth } = useContext(OrderContext);
+    const { uid, auth, setStatus } = useContext(OrderContext);
     const [rating, setRating] = useState(0); // Стан для збереження оцінки
+    const [comment, setComment] = useState(""); // Стан для збереження коментаря
     const [modalVisible, setModalVisible] = useState(false); // Стан для показу/приховування модального вікна
     const { clearGeoCoords } = useContext(GeoContext);
 
@@ -18,9 +21,12 @@ export const Executed = () => {
         }
 
         try {
-            // Надсилання оцінки на сервер
-            const response = await axios.post(`${ServerApi}/rate/${uid}`, rating, {
-                headers:{
+            // Надсилання оцінки на сервер разом із коментарем
+            const response = await axios.post(`${ServerApi}weborders/rate/${uid}`, {
+                rating: rating,
+                rating_comment: comment,
+            }, {
+                headers: {
                     'Accept': 'application/json',
                     'Authorization': auth
                 }
@@ -29,22 +35,19 @@ export const Executed = () => {
             // Виведення модального вікна з повідомленням "Дякуємо"
             setModalVisible(true);
 
-            // Скидання оцінки
+            // Скидання оцінки та коментаря
             setRating(0);
+            setComment("");
 
             const responseData = response.data;
             console.log(responseData);
         } catch (error) {
-            if (error.response.status === 401) {
+            if (error.response && error.response.status === 401) {
                 console.error('Error calculating cost: Unauthorized');
             } else {
                 console.error(error);
             }
         }
-        setRequest(null)
-        setUid(null)   
-        setStatus(null)
-        clearGeoCoords()
     }
 
     // Функція для встановлення оцінки
@@ -66,6 +69,13 @@ export const Executed = () => {
                     </TouchableOpacity>
                 ))}
             </View>
+            <TextInput
+                placeholder="Додайте коментар (макс. 120 символів)"
+                onChangeText={(text) => setComment(text)}
+                value={comment}
+                maxLength={120}
+                style={styles.commentInput}
+            />
             <TouchableOpacity onPress={handleRate} style={styles.rateButton}>
                 <Text style={styles.rateButtonText}>Оцінити</Text>
             </TouchableOpacity>
@@ -114,6 +124,15 @@ const styles = StyleSheet.create({
     rateButtonText: {
         color: 'white',
         fontSize: 18,
+    },
+    commentInput: {
+        backgroundColor: '#d9d9dd',
+        paddingHorizontal: 15,
+        height: 48,
+        borderRadius: 10,
+        fontSize: 18,
+        width: '80%',
+        marginTop: 15,
     },
     modalContainer: {
         flex: 1,

@@ -5,17 +5,18 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { DeleteOrder } from "./DeleteOrder";
 
 export const CarGo = ({titlename}) => {
-    // const { status } = useContext(OrderContext)
-
-    const status = {
-        order_cost: 72,
-        currency: "грн.",
-        order_car_info: "АА1172АА, синий, Ford C-Max",
-        driver_phone:"050-123-45-67",
-        rating: 4,
-        route_address_from:{ name:"ОЗЕРНАЯ УЛ. (ОБОЛОНЬ)" },
-        route_address_to:{ name: "ЯНГЕЛЯ АКАДЕМИКА УЛ." },
-    }
+    const { status } = useContext(OrderContext)
+    
+    // const status = {
+    //     order_cost: 72,
+    //     currency: "грн.",
+    //     order_car_info: "АА1172АА, синий, Ford C-Max",
+    //     driver_phone:"050-123-45-67",
+    //     rating: 4,
+    //     route_address_from:{ name:"ОЗЕРНАЯ УЛ. (ОБОЛОНЬ)" },
+    //     route_address_to:{ name: "ЯНГЕЛЯ АКАДЕМИКА УЛ." },
+    // }
+  
 
     const handleCallDriver = () => {
         const phoneNumber = status.driver_phone;

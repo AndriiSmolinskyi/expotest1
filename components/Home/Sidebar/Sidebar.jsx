@@ -10,11 +10,13 @@ import axios from 'axios';
 import { ServerApi } from '../../../ServerApi';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import { useNavigation } from '@react-navigation/native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Sidebar = ({toggleVisibility}) => {
     const { setUser } = useContext(UserContext);
     const {  clearGeoData } = useContext(GeoAdressContext); 
-    const { auth, clearOrderData } = useContext(OrderContext);
+    const { auth, clearOrderData, userData } = useContext(OrderContext);
     const { clearGeoCoords } = useContext(GeoContext);
     const { clearServiceData } = useContext(ServiceContext);
 
@@ -38,36 +40,29 @@ const Sidebar = ({toggleVisibility}) => {
       };
 
     const executionStatus = 'SearchesForCar'
-    const toggleHistory = async () => {
-        console.log(userData)
-        try {
-            const response = await axios.get(`${ServerApi}clients/ordershistory`, {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': auth
-                }
-            });
-    
-            const responseData = response.data;
-            console.log(responseData);
-        } catch (error) {
-            if (error.response === 401) {
-                console.error('Unauthorized');
-            } else {
-                console.error(error);
-            }
-        }    
-    }
+
+
+    const onSwipeGestureEvent = (event) => {
+        if (event.nativeEvent.state === State.ACTIVE) {
+          // Обробка жесту свайпу тут
+          toggleVisibility(); // Викликаємо функцію закриття сайдбару
+        }
+      };
 
     return(
-        <View style={styles.sideCont}>        
-            <View style={styles.side}>
-                {/* <Text>{userData.user_phone}</Text> */}
-                <Button title="Close" onPress={toggleVisibility}/>
-                <Button title="toggleHistory" onPress={toggleHistory}/>
-                <Button title="Logout" onPress={handleLogout}/>
-            </View>
-        </View>    
+        <PanGestureHandler onHandlerStateChange={onSwipeGestureEvent}>
+            <View style={styles.sideCont}> 
+                <View style={styles.side}>
+                    <Text>{userData.user_full_name}</Text>
+                    <Text>{userData.user_phone}</Text>
+                    <TouchableOpacity  onPress={() => navigation.navigate('History')}>
+                        <Text>Історія поїздок</Text>
+                    </TouchableOpacity>
+                    <Button title="Close" onPress={toggleVisibility}/>
+                    <Button title="Logout" onPress={handleLogout}/>
+                </View>
+            </View>  
+        </PanGestureHandler>      
     )
 }
 
