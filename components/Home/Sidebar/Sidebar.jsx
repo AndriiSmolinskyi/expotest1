@@ -56,8 +56,8 @@ const Sidebar = ({toggleVisibility}) => {
                     </TouchableOpacity>
 
                     <View style={styles.header}>
-                      <Text style={styles.header__text}>{userData.user_full_name}</Text>
-                      <Text style={[styles.header__text, styles.header__text__phone]}>{userData.user_phone}</Text>
+                      {userData && userData.user_full_name && <Text style={styles.header__text}>{userData.user_full_name}</Text>}
+                      {userData && <Text style={[styles.header__text, styles.header__text__phone]}>{userData.user_phone}</Text>}
                     </View>
                     
                     <View style={styles.main}>

@@ -13,11 +13,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Sidebar from './Sidebar/Sidebar';
 
 export const Home = ({ navigation }) => {
-  const { user, setUser } = useContext(UserContext);
-  const { startLocation, endLocation, clearGeoData } = useContext(GeoAdressContext); 
-  const { request, auth, clearOrderData } = useContext(OrderContext);
-  const { clearGeoCoords } = useContext(GeoContext);
-  const { clearServiceData } = useContext(ServiceContext);
+  const { startLocation, endLocation } = useContext(GeoAdressContext); 
+  const { request, uid } = useContext(OrderContext);
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
@@ -54,12 +51,12 @@ export const Home = ({ navigation }) => {
             )
         }
     </View> 
-
    
-
-    <TouchableOpacity onPress={toggleVisibility} style={styles.burgerContainer}>
+    {uid === null && <TouchableOpacity onPress={toggleVisibility} style={styles.burgerContainer}>
       <Icon name="bars" size={30}  style={styles.burger}/>
-    </TouchableOpacity>
+    </TouchableOpacity>}
+    
+    
     {isVisible && <Sidebar toggleVisibility={toggleVisibility}></Sidebar>}
   </View>
   );
