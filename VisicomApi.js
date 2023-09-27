@@ -1,0 +1,1 @@
+export const VisicomApi = '20a396a7d85377ccd96d9491b7889643';

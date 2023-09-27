@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
 import { GeoContext } from '../../Context/GeoContext';
+import { VisicomApi } from '../../../VisicomApi';
 
 export const LiveSearchComponent = () => {
   const [route, setRoute] = useState([]);
@@ -16,7 +17,7 @@ export const LiveSearchComponent = () => {
   const handleSearch = async () => {
     const origin = startCoords;
     const destination = endCoords;
-    const apiKey = '20a396a7d85377ccd96d9491b7889643';
+    const apiKey = VisicomApi;
     try {
       const response = await axios.get(`https://api.visicom.ua/data-api/5.0/core/distance.json?origin=${origin}&destination=${destination}&geometry=path&key=${apiKey}`);
       const data = response.data;
