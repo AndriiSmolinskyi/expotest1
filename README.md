@@ -1,4 +1,4 @@
-#Taxi Booking App
+# Taxi Booking App
 This project is a taxi booking application built with React Native. It provides users with the ability to book rides, track locations, and manage their rides through a mobile interface.
 
 Technologies Used:
